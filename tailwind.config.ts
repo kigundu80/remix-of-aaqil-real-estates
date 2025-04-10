@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -51,6 +52,24 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				// Custom colors for HM Property Consultants
+				hm: {
+					green: {
+						light: '#8CCF8C',
+						DEFAULT: '#2E7D32',
+						dark: '#1B5E20',
+					},
+					brown: {
+						light: '#D7CCC8',
+						DEFAULT: '#795548',
+						dark: '#4E342E',
+					},
+					gold: {
+						light: '#FFF8E1',
+						DEFAULT: '#FFC107',
+						dark: '#FF8F00',
+					},
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
