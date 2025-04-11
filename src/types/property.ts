@@ -1,4 +1,5 @@
 
+
 export type PropertyType = {
   id: string;
   title: string;
@@ -11,8 +12,23 @@ export type PropertyType = {
   status: 'available' | 'sold' | 'pending';
 };
 
-export type ExtendedPropertyType = PropertyType & {
+export type ExtendedPropertyType = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  location: string;
+  size: string;
+  imageUrl: string;
+  featured: boolean;
+  status: 'For Sale' | 'Sold' | 'Pending';
+  features: string[];
   amenities: string[];
+  listedDate: string;
+  agentName: string;
+  agentPhone: string;
+  agentEmail: string;
+  additionalImages?: string[];
   latitude: number;
   longitude: number;
   seller: {
@@ -24,15 +40,4 @@ export type ExtendedPropertyType = PropertyType & {
   legalStatus: string;
   zoning: string;
   utilities: string[];
-  // Additional fields needed for PropertyDetailPage
-  imageUrl: string;
-  featured: boolean;
-  description: string;
-  features: string[];
-  listedDate: string;
-  agentName: string;
-  agentPhone: string;
-  agentEmail: string;
-  additionalImages?: string[];
-  status: 'For Sale' | 'Sold' | 'Pending';
 };
