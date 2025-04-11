@@ -24,4 +24,15 @@ export type ExtendedPropertyType = PropertyType & {
   legalStatus: string;
   zoning: string;
   utilities: string[];
+  // Additional fields needed for PropertyDetailPage
+  imageUrl: string;
+  featured: boolean;
+  description: string;
+  features: string[];
+  listedDate: string;
+  agentName: string;
+  agentPhone: string;
+  agentEmail: string;
+  additionalImages?: string[];
+  status: 'For Sale' | 'Sold' | 'Pending';
 };

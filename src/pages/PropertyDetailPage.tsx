@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { PropertyType } from "@/components/PropertyCard";
+import { ExtendedPropertyType } from "@/types/property";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -36,7 +38,18 @@ const detailedProperties: ExtendedPropertyType[] = sampleProperties.map(property
     "https://images.unsplash.com/photo-1622379686890-43c28c26d1ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFuZHNjYXBlJTIwbGFuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
     "https://images.unsplash.com/photo-1490682143684-14369e18dce8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFuZHNjYXBlJTIwbGFuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
     "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-  ]
+  ],
+  latitude: 0.3476,
+  longitude: 32.5825,
+  seller: {
+    name: "Uganda Land Holdings Ltd",
+    phone: "+256 780 123 456",
+    email: "info@uglandholds.com"
+  },
+  nearbyFacilities: ["Kampala International School", "Bugolobi Market", "Nsambya Hospital"],
+  legalStatus: "Freehold Title",
+  zoning: "Residential",
+  utilities: ["Electricity", "Water", "Road Access"]
 }));
 
 const PropertyDetailPage = () => {

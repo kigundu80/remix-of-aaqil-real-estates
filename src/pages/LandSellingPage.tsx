@@ -1,9 +1,8 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, TrendingUp, PresentationChart, HandshakeIcon } from "lucide-react";
+import { Search, TrendingUp, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LandSellingPage = () => {
@@ -83,7 +82,7 @@ const LandSellingPage = () => {
               <Card>
                 <CardHeader>
                   <div className="w-12 h-12 bg-hm-green-dark rounded-full flex items-center justify-center mb-4">
-                    <PresentationChart className="text-white" />
+                    <BarChart3 className="text-white" />
                   </div>
                   <CardTitle>Buyer Negotiations</CardTitle>
                 </CardHeader>
