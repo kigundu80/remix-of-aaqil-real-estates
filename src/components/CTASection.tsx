@@ -18,10 +18,22 @@ const CTASection = () => {
             <Link to="/properties">Browse Properties</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-            <Link to="/contact">Get in Touch</Link>
+            <Link to="/land-buying">Land Buying</Link>
           </Button>
           <Button asChild size="lg" className="bg-white text-hm-green hover:bg-gray-100">
             <Link to="/payment">Make a Payment</Link>
+          </Button>
+        </div>
+        
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Button asChild variant="link" className="text-white hover:text-hm-gold">
+            <Link to="/land-selling">Land Selling</Link>
+          </Button>
+          <Button asChild variant="link" className="text-white hover:text-hm-gold">
+            <Link to="/property-valuation">Property Valuation</Link>
+          </Button>
+          <Button asChild variant="link" className="text-white hover:text-hm-gold">
+            <Link to="/legal-consultation">Legal Consultation</Link>
           </Button>
         </div>
       </div>

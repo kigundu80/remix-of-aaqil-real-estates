@@ -65,22 +65,22 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/services" className="text-gray-200 hover:text-white">
+                <Link to="/land-buying" className="text-gray-200 hover:text-white">
                   Land Buying
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-200 hover:text-white">
+                <Link to="/land-selling" className="text-gray-200 hover:text-white">
                   Land Selling
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-200 hover:text-white">
+                <Link to="/property-valuation" className="text-gray-200 hover:text-white">
                   Property Valuation
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-200 hover:text-white">
+                <Link to="/legal-consultation" className="text-gray-200 hover:text-white">
                   Legal Consultation
                 </Link>
               </li>

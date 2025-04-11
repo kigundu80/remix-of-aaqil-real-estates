@@ -14,6 +14,10 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import NotFound from "./pages/NotFound";
+import LandBuyingPage from "./pages/LandBuyingPage";
+import LandSellingPage from "./pages/LandSellingPage";
+import PropertyValuationPage from "./pages/PropertyValuationPage";
+import LegalConsultationPage from "./pages/LegalConsultationPage";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +37,10 @@ const App = () => (
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/land-buying" element={<LandBuyingPage />} />
+          <Route path="/land-selling" element={<LandSellingPage />} />
+          <Route path="/property-valuation" element={<PropertyValuationPage />} />
+          <Route path="/legal-consultation" element={<LegalConsultationPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
