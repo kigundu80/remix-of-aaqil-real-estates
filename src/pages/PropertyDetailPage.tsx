@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -10,7 +9,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { MapPin, Phone, Mail, Calendar, Ruler, CheckCircle, DollarSign, Heart, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-// Sample property data - in a real app this would come from an API
 const sampleProperties: PropertyType[] = [
   {
     id: "1",
@@ -22,22 +20,8 @@ const sampleProperties: PropertyType[] = [
     featured: true,
     status: 'For Sale'
   },
-  // Add all other properties from PropertiesPage...
 ];
 
-// Extended property details for detail page
-interface ExtendedPropertyType extends PropertyType {
-  description?: string;
-  features?: string[];
-  amenities?: string[];
-  listedDate?: string;
-  agentName?: string;
-  agentPhone?: string;
-  agentEmail?: string;
-  additionalImages?: string[];
-}
-
-// Add detailed information to our sample data
 const detailedProperties: ExtendedPropertyType[] = sampleProperties.map(property => ({
   ...property,
   description: "This is a prime piece of land located in a serene environment with good access to social amenities. The land is fully titled and ready for immediate development. It's perfect for residential use with excellent soil quality and gently sloping terrain, offering good drainage. The property has access to electricity and water supply networks.",
@@ -64,7 +48,6 @@ const PropertyDetailPage = () => {
   useEffect(() => {
     setIsLoading(true);
     
-    // Simulate API call
     setTimeout(() => {
       const foundProperty = detailedProperties.find(p => p.id === id);
       setProperty(foundProperty || null);
@@ -89,7 +72,6 @@ const PropertyDetailPage = () => {
   };
   
   const handleShareProperty = () => {
-    // In a real app, this would open a share dialog or copy the URL
     navigator.clipboard.writeText(window.location.href);
     
     toast({
@@ -97,6 +79,10 @@ const PropertyDetailPage = () => {
       description: "Property link copied to clipboard.",
       variant: "default",
     });
+  };
+
+  const handleMakePayment = () => {
+    window.location.href = `/payment?propertyId=${property.id}&amount=${property.price}`;
   };
 
   if (isLoading) {
@@ -146,7 +132,6 @@ const PropertyDetailPage = () => {
       
       <main className="flex-grow">
         <div className="container mx-auto px-4 py-8">
-          {/* Breadcrumbs */}
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
             <Link to="/" className="hover:text-hm-green">Home</Link>
             <span>/</span>
@@ -155,7 +140,6 @@ const PropertyDetailPage = () => {
             <span className="text-gray-700">{property.title}</span>
           </div>
 
-          {/* Property Images Carousel */}
           <div className="mb-8">
             <Carousel className="w-full">
               <CarouselContent>
@@ -178,7 +162,6 @@ const PropertyDetailPage = () => {
             </Carousel>
           </div>
 
-          {/* Property Header */}
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
             <div>
               <h1 className="text-3xl font-bold mb-2">{property.title}</h1>
@@ -208,9 +191,7 @@ const PropertyDetailPage = () => {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column - Property Details */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Property Description</h2>
@@ -239,7 +220,6 @@ const PropertyDetailPage = () => {
                 </div>
               </div>
               
-              {/* Map Placeholder */}
               <div className="bg-white rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Location</h2>
                 <div className="rounded-lg overflow-hidden h-64 bg-gray-200 flex items-center justify-center">
@@ -248,9 +228,7 @@ const PropertyDetailPage = () => {
               </div>
             </div>
             
-            {/* Right Column - Agent Info & Actions */}
             <div className="lg:col-span-1">
-              {/* Agent Information */}
               <div className="bg-white rounded-lg shadow-md p-6 mb-8">
                 <h2 className="text-xl font-semibold mb-4">Property Information</h2>
                 <div className="space-y-4 mb-6">
@@ -293,16 +271,26 @@ const PropertyDetailPage = () => {
                     </a>
                   </div>
                   
-                  <Button 
-                    onClick={handleContactAgent}
-                    className="w-full mt-2"
-                  >
-                    Contact Agent
-                  </Button>
+                  <div className="space-y-2">
+                    <Button 
+                      onClick={handleContactAgent}
+                      className="w-full"
+                    >
+                      Contact Agent
+                    </Button>
+                    
+                    {property.status === 'For Sale' && (
+                      <Button 
+                        onClick={handleMakePayment}
+                        className="w-full bg-hm-gold hover:bg-hm-gold-dark text-black"
+                      >
+                        Make Payment
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
               
-              {/* Action Buttons */}
               <div className="flex gap-4">
                 <Button 
                   variant="outline" 
