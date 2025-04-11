@@ -24,7 +24,7 @@ const ChartContainer = React.forwardRef<HTMLDivElement, ChartContainerProps>(
         >
           <ChartStyle id={chartId} config={config} />
           <RechartsPrimitive.ResponsiveContainer>
-            {children}
+            {React.Children.only(children)}
           </RechartsPrimitive.ResponsiveContainer>
         </div>
       </ChartContext.Provider>

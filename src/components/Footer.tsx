@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Paintbrush } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
@@ -84,6 +85,12 @@ const Footer = () => {
                   Legal Consultation
                 </Link>
               </li>
+              <li>
+                <Link to="/theme" className="text-gray-200 hover:text-white flex items-center gap-1">
+                  <Paintbrush size={14} />
+                  Customize Theme
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -110,10 +117,18 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-hm-green-dark mt-12 pt-6">
-          <p className="text-center text-sm text-gray-200">
+        <div className="border-t border-hm-green-dark mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-200">
             © {new Date().getFullYear()} HM Property Consultants. All rights reserved.
           </p>
+          <div className="mt-4 md:mt-0 flex items-center gap-2">
+            <Button asChild variant="ghost" size="sm" className="text-white hover:bg-hm-green-dark">
+              <Link to="/theme" className="flex items-center gap-1">
+                <Paintbrush size={16} />
+                <span>Customize Theme</span>
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </footer>
