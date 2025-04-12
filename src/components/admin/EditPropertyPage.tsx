@@ -83,11 +83,18 @@ const EditPropertyPage: React.FC = () => {
     // Convert string price to number for storing in PropertyType
     const updatedProperty: Partial<PropertyType> = {
       ...property,
-      ...formData,
+      title: formData.title,
+      description: formData.description,
       price: parseFloat(formData.price),
+      location: formData.location,
+      size: formData.size,
+      bedrooms: formData.bedrooms,
+      bathrooms: formData.bathrooms,
+      status: formData.status as 'available' | 'sold' | 'pending',
+      type: formData.type,
       features: typeof formData.features === 'string' ? 
         formData.features.split(',').map(item => item.trim()) : 
-        formData.features,
+        []
     };
     
     setTimeout(() => {
