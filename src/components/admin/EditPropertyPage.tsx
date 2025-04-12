@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import PropertyForm from "./PropertyForm";
+import { PropertyForm } from "./PropertyForm";
 import { useToast } from "@/hooks/use-toast";
-import { PropertyType } from "@/types/property";
+import { PropertyType, PropertyFormValues } from "@/types/property";
 
 const EditPropertyPage: React.FC = () => {
   const { id } = useParams();
@@ -76,9 +76,19 @@ const EditPropertyPage: React.FC = () => {
     fetchProperty();
   }, [id, navigate, toast]);
 
-  const handleSubmit = (formData: Partial<PropertyType>) => {
+  const handleSubmit = (formData: PropertyFormValues) => {
     // Simulate API call to update property
     setIsLoading(true);
+    
+    // Convert string price to number for storing in PropertyType
+    const updatedProperty: Partial<PropertyType> = {
+      ...property,
+      ...formData,
+      price: parseFloat(formData.price),
+      features: typeof formData.features === 'string' ? 
+        formData.features.split(',').map(item => item.trim()) : 
+        formData.features,
+    };
     
     setTimeout(() => {
       toast({

@@ -52,3 +52,5 @@ export const PropertyStatsCard: React.FC<PropertyStatsCardProps> = ({
     </Card>
   );
 };
+
+export default PropertyStatsCard;

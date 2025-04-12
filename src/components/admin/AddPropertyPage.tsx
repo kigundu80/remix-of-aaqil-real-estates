@@ -3,12 +3,13 @@ import React from "react";
 import { PropertyForm } from "./PropertyForm";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { PropertyFormValues } from "@/types/property";
 
 const AddPropertyPage: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleAddProperty = (data: any) => {
+  const handleAddProperty = (data: PropertyFormValues) => {
     // This would normally send data to an API
     console.log("Property data to be saved:", data);
     

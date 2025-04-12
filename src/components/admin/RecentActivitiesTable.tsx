@@ -41,7 +41,7 @@ export const RecentActivitiesTable: React.FC<RecentActivitiesTableProps> = ({ ac
                 <Badge
                   variant={
                     activity.action.includes("Added") ? "default" :
-                    activity.action.includes("Sold") ? "success" :
+                    activity.action.includes("Sold") ? "destructive" :
                     activity.action.includes("Updated") ? "outline" : 
                     activity.action.includes("Pending") ? "secondary" : "default"
                   }
@@ -58,3 +58,5 @@ export const RecentActivitiesTable: React.FC<RecentActivitiesTableProps> = ({ ac
     </div>
   );
 };
+
+export default RecentActivitiesTable;

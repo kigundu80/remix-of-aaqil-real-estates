@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -7,20 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ImageUploader from "@/components/ImageUploader";
-
-interface PropertyFormValues {
-  title: string;
-  description: string;
-  price: string;
-  location: string;
-  size: string;
-  bedrooms: number;
-  bathrooms: number;
-  features: string;
-  status: string;
-  type: string;
-  images?: FileList;
-}
+import { PropertyFormValues } from "@/types/property";
 
 interface PropertyFormProps {
   initialValues?: Partial<PropertyFormValues>;
@@ -28,7 +14,7 @@ interface PropertyFormProps {
   isLoading?: boolean;
 }
 
-const PropertyForm: React.FC<PropertyFormProps> = ({ initialValues, onSubmit, isLoading = false }) => {
+export const PropertyForm: React.FC<PropertyFormProps> = ({ initialValues, onSubmit, isLoading = false }) => {
   const defaultValues: Partial<PropertyFormValues> = {
     title: "",
     description: "",
@@ -48,13 +34,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialValues, onSubmit, is
   });
 
   const handleSubmit = (data: PropertyFormValues) => {
-    // Convert string features to array if needed
-    const processedData = {
-      ...data,
-      features: typeof data.features === 'string' ? data.features.split(',').map(item => item.trim()) : data.features,
-    };
-    
-    onSubmit(processedData);
+    onSubmit(data);
   };
 
   return (
