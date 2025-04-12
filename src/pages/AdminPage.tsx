@@ -15,12 +15,13 @@ import {
   SidebarMenuButton,
   SidebarInset
 } from "@/components/ui/sidebar";
-import { Building, PlusCircle, Users, LayoutDashboard, LogOut } from "lucide-react";
+import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
 // This would normally come from an authentication context
 const isAdmin = true; // For demo purposes, this would be dynamically determined
+const adminName = "Kiggundu Akram"; // Add the admin name
 
 const AdminPage: React.FC = () => {
   const { toast } = useToast();
@@ -51,7 +52,7 @@ const AdminPage: React.FC = () => {
           <SidebarHeader>
             <div className="p-2">
               <h2 className="text-lg font-bold">Admin Dashboard</h2>
-              <p className="text-xs text-muted-foreground">Manage your properties and users</p>
+              <p className="text-xs text-muted-foreground">Welcome, {adminName}</p>
             </div>
           </SidebarHeader>
           
@@ -105,6 +106,22 @@ const AdminPage: React.FC = () => {
                       <a href="/admin/users">
                         <Users className="w-4 h-4" />
                         <span>Manage Users</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+
+            <SidebarGroup>
+              <SidebarGroupLabel>Account</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a href="/admin/profile">
+                        <User className="w-4 h-4" />
+                        <span>My Profile</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

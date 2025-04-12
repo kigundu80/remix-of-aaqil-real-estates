@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Paintbrush } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Paintbrush, Copyright } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -118,9 +118,13 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-hm-green-dark mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-200">
-            © {new Date().getFullYear()} HM Property Consultants. All rights reserved.
-          </p>
+          <div className="flex items-center">
+            <Copyright className="h-4 w-4 mr-1" />
+            <p className="text-sm text-gray-200">
+              {new Date().getFullYear()} HM Property Consultants. All rights reserved. 
+              <span className="ml-2 font-medium">Created by Karma Aaqil Akram Kiggundu</span>
+            </p>
+          </div>
           <div className="mt-4 md:mt-0 flex items-center gap-2">
             <Button asChild variant="ghost" size="sm" className="text-white hover:bg-hm-green-dark">
               <Link to="/theme" className="flex items-center gap-1">

@@ -26,6 +26,7 @@ import PropertyManagementPage from "./components/admin/PropertyManagementPage";
 import AddPropertyPage from "./components/admin/AddPropertyPage";
 import EditPropertyPage from "./components/admin/EditPropertyPage";
 import UserManagementPage from "./components/admin/UserManagementPage";
+import AdminProfilePage from "./components/admin/AdminProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ const App = () => (
               <Route path="properties/add" element={<AddPropertyPage />} />
               <Route path="properties/edit/:id" element={<EditPropertyPage />} />
               <Route path="users" element={<UserManagementPage />} />
+              <Route path="profile" element={<AdminProfilePage />} />
             </Route>
             
             <Route path="*" element={<NotFound />} />

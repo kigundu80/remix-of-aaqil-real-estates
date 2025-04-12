@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Table,
@@ -18,21 +17,21 @@ import { useToast } from "@/components/ui/use-toast";
 const sampleUsers = [
   {
     id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "user",
+    name: "Kiggundu Akram",
+    email: "akram@hmproperty.com",
+    role: "admin",
     status: "active",
-    registeredDate: "2023-04-15",
-    lastLogin: "2023-09-22"
+    registeredDate: "2023-01-05",
+    lastLogin: "2023-09-24"
   },
   {
     id: "2",
     name: "Jane Smith",
     email: "jane@example.com",
-    role: "admin",
+    role: "user",
     status: "active",
     registeredDate: "2023-02-10",
-    lastLogin: "2023-09-24"
+    lastLogin: "2023-09-22"
   },
   {
     id: "3",
@@ -191,15 +190,17 @@ export const UserManagementTable: React.FC = () => {
                         </Button>
                       )}
                       
-                      <Button 
-                        variant="outline" 
-                        size="icon"
-                        className="text-red-600"
-                        onClick={() => handleDeleteUser(user.id)}
-                        title="Delete User"
-                      >
-                        <span className="text-xl leading-none">&times;</span>
-                      </Button>
+                      {user.role !== "admin" && (
+                        <Button 
+                          variant="outline" 
+                          size="icon"
+                          className="text-red-600"
+                          onClick={() => handleDeleteUser(user.id)}
+                          title="Delete User"
+                        >
+                          <span className="text-xl leading-none">&times;</span>
+                        </Button>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
