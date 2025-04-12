@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -16,6 +17,7 @@ interface AuthFormProps {
 const AuthForm = ({ type, onSubmit }: AuthFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,6 +26,12 @@ const AuthForm = ({ type, onSubmit }: AuthFormProps) => {
     
     try {
       const formData = new FormData(e.currentTarget);
+      
+      // Add admin status to form data
+      if (type === "login") {
+        formData.append("isAdmin", isAdmin.toString());
+      }
+      
       onSubmit(formData);
       
       toast({
@@ -144,6 +152,17 @@ const AuthForm = ({ type, onSubmit }: AuthFormProps) => {
                   </span>
                 </Button>
               </div>
+            </div>
+          )}
+
+          {type === "login" && (
+            <div className="flex items-center space-x-2">
+              <Switch 
+                id="admin-mode" 
+                checked={isAdmin} 
+                onCheckedChange={setIsAdmin} 
+              />
+              <Label htmlFor="admin-mode" className="cursor-pointer">Admin login</Label>
             </div>
           )}
 

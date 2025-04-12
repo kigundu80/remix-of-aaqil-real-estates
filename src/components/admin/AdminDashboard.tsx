@@ -1,83 +1,86 @@
 
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building, User, DollarSign, Calendar } from "lucide-react";
-import { PropertyStatsCard } from "./PropertyStatsCard";
-import { RecentActivitiesTable } from "./RecentActivitiesTable";
-import { Chart, ChartContainer, ChartLegend, ChartTooltip } from "@/components/ui/chart";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PropertyStatsCard from "./PropertyStatsCard";
+import RecentActivitiesTable from "./RecentActivitiesTable";
+import { ChartContainer } from "@/components/ui/chart/chart-container";
 
 const AdminDashboard: React.FC = () => {
-  // This would normally be fetched from an API
-  const stats = [
-    { title: "Total Properties", value: 127, icon: Building, change: 12 },
-    { title: "Registered Users", value: 356, icon: User, change: 8 },
-    { title: "Revenue", value: "$92,435", icon: DollarSign, change: -2 },
-    { title: "Pending Approvals", value: 9, icon: Calendar, change: 0 }
-  ];
+  const dummyData = {
+    totalProperties: 187,
+    availableProperties: 104,
+    pendingProperties: 32,
+    soldProperties: 51,
+    recentActivities: [
+      { action: "Property Added", title: "Sunny Gardens Villa", date: "2023-05-01", user: "admin@example.com" },
+      { action: "Property Sold", title: "Mountain View Cottage", date: "2023-04-28", user: "john@example.com" },
+      { action: "Property Updated", title: "Downtown Apartment", date: "2023-04-26", user: "admin@example.com" },
+      { action: "Property Added", title: "Seaside Villa", date: "2023-04-25", user: "sarah@example.com" },
+      { action: "Property Pending", title: "Forest Retreat", date: "2023-04-23", user: "admin@example.com" },
+    ]
+  };
 
-  const propertyTypeData = [
-    { name: "Land", value: 45 },
-    { name: "Residential", value: 30 },
-    { name: "Commercial", value: 15 },
-    { name: "Agricultural", value: 10 }
-  ];
-
-  const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042'];
+  const chartConfig = {
+    data: [
+      { name: "Jan", value: 12 },
+      { name: "Feb", value: 18 },
+      { name: "Mar", value: 15 },
+      { name: "Apr", value: 25 },
+      { name: "May", value: 32 },
+      { name: "Jun", value: 28 },
+    ],
+    xField: "name",
+    yField: "value",
+    colorScheme: "accent"
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Overview of your properties and users</p>
+        <p className="text-muted-foreground">View key metrics and recent activities</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat, index) => (
-          <PropertyStatsCard key={index} {...stat} />
-        ))}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <PropertyStatsCard title="Total Properties" value={dummyData.totalProperties} icon="building" />
+        <PropertyStatsCard title="Available" value={dummyData.availableProperties} icon="home" />
+        <PropertyStatsCard title="Pending" value={dummyData.pendingProperties} icon="clock" />
+        <PropertyStatsCard title="Sold" value={dummyData.soldProperties} icon="check-circle" />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Property Types</CardTitle>
-            <CardDescription>Distribution of property types</CardDescription>
-          </CardHeader>
-          <CardContent className="flex justify-center">
-            <ChartContainer className="h-[300px]">
-              <PieChart>
-                <Pie
-                  data={propertyTypeData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  paddingAngle={5}
-                  dataKey="value"
-                  label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                >
-                  {propertyTypeData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-                  ))}
-                </Pie>
-                <ChartTooltip />
-              </PieChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+      <Tabs defaultValue="overview" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">
+          <ChartContainer config={chartConfig} className="h-[300px]">
+            <div className="flex items-center justify-center h-full">
+              <p className="text-muted-foreground">Property sales by month</p>
+            </div>
+          </ChartContainer>
+        </TabsContent>
+        <TabsContent value="analytics">
+          <Card>
+            <CardHeader>
+              <CardTitle>Analytics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">Detailed analytics coming soon...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Latest actions on the platform</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <RecentActivitiesTable />
-          </CardContent>
-        </Card>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Activities</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <RecentActivitiesTable activities={dummyData.recentActivities} />
+        </CardContent>
+      </Card>
     </div>
   );
 };
