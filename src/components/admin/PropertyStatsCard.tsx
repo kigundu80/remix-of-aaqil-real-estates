@@ -1,27 +1,35 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Building, Home, Clock, CheckCircle } from "lucide-react";
 
 interface PropertyStatsCardProps {
   title: string;
   value: string | number;
-  icon: LucideIcon;
+  icon: string;
   change?: number;
 }
 
 export const PropertyStatsCard: React.FC<PropertyStatsCardProps> = ({
   title,
   value,
-  icon: Icon,
+  icon,
   change
 }) => {
+  // Map string icon names to Lucide components
+  const iconMap: Record<string, React.ReactNode> = {
+    "building": <Building className="h-4 w-4 text-muted-foreground" />,
+    "home": <Home className="h-4 w-4 text-muted-foreground" />,
+    "clock": <Clock className="h-4 w-4 text-muted-foreground" />,
+    "check-circle": <CheckCircle className="h-4 w-4 text-muted-foreground" />
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <p className="text-sm font-medium">{title}</p>
-        <Icon className="h-4 w-4 text-muted-foreground" />
+        {iconMap[icon] || <div className="h-4 w-4" />}
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>

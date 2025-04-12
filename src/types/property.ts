@@ -1,5 +1,4 @@
 
-
 export type PropertyType = {
   id: string;
   title: string;
@@ -7,9 +6,13 @@ export type PropertyType = {
   price: number;
   location: string;
   size: string;
+  bedrooms: number;
+  bathrooms: number;
   images: string[];
   features: string[];
   status: 'available' | 'sold' | 'pending';
+  type: string;
+  createdAt: string;
 };
 
 export type ExtendedPropertyType = {
@@ -41,3 +44,17 @@ export type ExtendedPropertyType = {
   zoning: string;
   utilities: string[];
 };
+
+export interface PropertyFormValues {
+  title: string;
+  description: string;
+  price: string;
+  location: string;
+  size: string;
+  bedrooms: number;
+  bathrooms: number;
+  features: string;
+  status: string;
+  type: string;
+  images?: FileList;
+}

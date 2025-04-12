@@ -2,9 +2,10 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PropertyStatsCard from "./PropertyStatsCard";
-import RecentActivitiesTable from "./RecentActivitiesTable";
+import { PropertyStatsCard } from "./PropertyStatsCard";
+import { RecentActivitiesTable } from "./RecentActivitiesTable";
 import { ChartContainer } from "@/components/ui/chart/chart-container";
+import type { ChartConfig } from "@/components/ui/chart/types";
 
 const AdminDashboard: React.FC = () => {
   const dummyData = {
@@ -21,18 +22,20 @@ const AdminDashboard: React.FC = () => {
     ]
   };
 
-  const chartConfig = {
+  // Fix chartConfig to match ChartConfig type
+  const chartConfig: ChartConfig = {
+    color: "#10b981", // Using a green color
     data: [
-      { name: "Jan", value: 12 },
-      { name: "Feb", value: 18 },
-      { name: "Mar", value: 15 },
-      { name: "Apr", value: 25 },
-      { name: "May", value: 32 },
-      { name: "Jun", value: 28 },
+      { label: "Jan", value: 12 },
+      { label: "Feb", value: 18 },
+      { label: "Mar", value: 15 },
+      { label: "Apr", value: 25 },
+      { label: "May", value: 32 },
+      { label: "Jun", value: 28 },
     ],
-    xField: "name",
-    yField: "value",
-    colorScheme: "accent"
+    categories: ["label"],
+    index: "label",
+    valueFormatter: (value) => `${value} sales`
   };
 
   return (
