@@ -20,6 +20,12 @@ import LandSellingPage from "./pages/LandSellingPage";
 import PropertyValuationPage from "./pages/PropertyValuationPage";
 import LegalConsultationPage from "./pages/LegalConsultationPage";
 import ThemeSelectionPage from "./pages/ThemeSelectionPage";
+import AdminPage from "./pages/AdminPage";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import PropertyManagementPage from "./components/admin/PropertyManagementPage";
+import AddPropertyPage from "./components/admin/AddPropertyPage";
+import EditPropertyPage from "./components/admin/EditPropertyPage";
+import UserManagementPage from "./components/admin/UserManagementPage";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +51,16 @@ const App = () => (
             <Route path="/property-valuation" element={<PropertyValuationPage />} />
             <Route path="/legal-consultation" element={<LegalConsultationPage />} />
             <Route path="/theme" element={<ThemeSelectionPage />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminPage />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="properties" element={<PropertyManagementPage />} />
+              <Route path="properties/add" element={<AddPropertyPage />} />
+              <Route path="properties/edit/:id" element={<EditPropertyPage />} />
+              <Route path="users" element={<UserManagementPage />} />
+            </Route>
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
