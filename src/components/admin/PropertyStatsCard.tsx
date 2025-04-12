@@ -1,53 +1,50 @@
 
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import React, { ReactNode } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowUp, ArrowDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Building, Home, Clock, CheckCircle } from "lucide-react";
 
-interface PropertyStatsCardProps {
+export interface PropertyStatsCardProps {
   title: string;
-  value: string | number;
-  icon: string;
-  change?: number;
+  value: number;
+  change: number;
+  icon: ReactNode;
 }
 
-export const PropertyStatsCard: React.FC<PropertyStatsCardProps> = ({
-  title,
-  value,
-  icon,
-  change
+const PropertyStatsCard: React.FC<PropertyStatsCardProps> = ({ 
+  title, 
+  value, 
+  change, 
+  icon 
 }) => {
-  // Map string icon names to Lucide components
-  const iconMap: Record<string, React.ReactNode> = {
-    "building": <Building className="h-4 w-4 text-muted-foreground" />,
-    "home": <Home className="h-4 w-4 text-muted-foreground" />,
-    "clock": <Clock className="h-4 w-4 text-muted-foreground" />,
-    "check-circle": <CheckCircle className="h-4 w-4 text-muted-foreground" />
-  };
+  const isPositive = change >= 0;
+  
+  // Format value based on type (currency or number)
+  const formattedValue = title.toLowerCase().includes('sales') 
+    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value) 
+    : value.toLocaleString();
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <p className="text-sm font-medium">{title}</p>
-        {iconMap[icon] || <div className="h-4 w-4" />}
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        {typeof change !== 'undefined' && (
-          <div className="flex items-center text-xs mt-1">
-            <span 
-              className={cn("flex items-center",
-                change > 0 ? "text-green-500" : 
-                change < 0 ? "text-red-500" : 
-                "text-muted-foreground"
-              )}
-            >
-              {change > 0 && "+"}
-              {change}%
-            </span>
-            <span className="text-muted-foreground ml-1">from last month</span>
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between">
+          <span className="p-2 rounded-md bg-primary/10 text-primary">
+            {icon}
+          </span>
+          
+          <div className={cn(
+            "flex items-center text-xs font-medium",
+            isPositive ? "text-green-500" : "text-red-500"
+          )}>
+            {isPositive ? <ArrowUp className="h-3 w-3 mr-1" /> : <ArrowDown className="h-3 w-3 mr-1" />}
+            {Math.abs(change)}%
           </div>
-        )}
+        </div>
+        
+        <div className="mt-4">
+          <p className="text-muted-foreground text-sm font-medium">{title}</p>
+          <p className="text-2xl font-bold mt-1">{formattedValue}</p>
+        </div>
       </CardContent>
     </Card>
   );

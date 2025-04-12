@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import { PropertyForm } from "./PropertyForm";
+import { PropertyForm } from "./property-form";
 import { useToast } from "@/hooks/use-toast";
 import { PropertyType, PropertyFormValues } from "@/types/property";
 
@@ -129,12 +129,12 @@ const EditPropertyPage: React.FC = () => {
               initialValues={{
                 title: property.title,
                 description: property.description,
-                price: property.price.toString(), // Convert number to string
+                price: property.price.toString(), 
                 location: property.location,
                 size: property.size,
                 bedrooms: property.bedrooms,
                 bathrooms: property.bathrooms,
-                features: property.features.join(", "), // Convert array to string
+                features: property.features.join(", "),
                 status: property.status,
                 type: property.type,
               }} 

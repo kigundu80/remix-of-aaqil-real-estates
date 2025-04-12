@@ -1,8 +1,8 @@
 
 import React from "react";
-import { PropertyForm } from "./PropertyForm";
-import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { PropertyForm } from "./property-form";
+import { useToast } from "@/components/ui/use-toast";
 import { PropertyFormValues } from "@/types/property";
 
 const AddPropertyPage: React.FC = () => {
