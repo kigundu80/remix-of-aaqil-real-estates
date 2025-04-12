@@ -17,11 +17,11 @@ interface Activity {
   user: string;
 }
 
-interface RecentActivitiesTableProps {
+export interface RecentActivitiesTableProps {
   activities: Activity[];
 }
 
-export const RecentActivitiesTable: React.FC<RecentActivitiesTableProps> = ({ activities }) => {
+const RecentActivitiesTable: React.FC<RecentActivitiesTableProps> = ({ activities }) => {
   return (
     <div className="max-h-[250px] overflow-auto">
       <Table>
