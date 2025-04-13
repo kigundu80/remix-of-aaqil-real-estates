@@ -38,10 +38,11 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-hm-green">HM</span>
-          <span className="hidden sm:inline-block text-lg font-semibold">
-            Property Consultants
-          </span>
+          <img 
+            src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
+            alt="HM Property Consultants Logo" 
+            className="h-12 w-auto" 
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -92,6 +93,13 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex items-center justify-between mb-6">
+                <Link to="/">
+                  <img 
+                    src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
+                    alt="HM Property Consultants Logo" 
+                    className="h-10 w-auto" 
+                  />
+                </Link>
                 <ThemeToggle />
               </div>
               <div className="flex flex-col gap-6 pt-10">
