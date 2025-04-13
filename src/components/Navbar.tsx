@@ -43,6 +43,9 @@ const Navbar = () => {
             alt="HM Property Consultants Logo" 
             className="h-12 w-auto" 
           />
+          <span className="hidden sm:inline-block text-lg font-semibold">
+            HM PROPERTY CONSULTANTS
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -99,6 +102,9 @@ const Navbar = () => {
                     alt="HM Property Consultants Logo" 
                     className="h-10 w-auto" 
                   />
+                  <span className="inline-block mt-1 font-semibold">
+                    HM PROPERTY CONSULTANTS
+                  </span>
                 </Link>
                 <ThemeToggle />
               </div>

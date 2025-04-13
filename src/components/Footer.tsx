@@ -15,6 +15,7 @@ const Footer = () => {
                 alt="HM Property Consultants Logo" 
                 className="h-16 w-auto mb-3 bg-white p-2 rounded" 
               />
+              <span className="text-xl font-bold text-white">HM PROPERTY CONSULTANTS</span>
             </Link>
             <p className="text-sm text-gray-200 mb-4">
               Your trusted partner in finding the perfect land property in Uganda.
@@ -124,7 +125,7 @@ const Footer = () => {
           <div className="flex items-center">
             <Copyright className="h-4 w-4 mr-1" />
             <p className="text-sm text-gray-200">
-              {new Date().getFullYear()} HM Property Consultants. All rights reserved. 
+              {new Date().getFullYear()} HM PROPERTY CONSULTANTS. All rights reserved. 
               <span className="ml-2 font-medium">Created by Karma Aaqil Akram Kiggundu</span>
             </p>
           </div>
