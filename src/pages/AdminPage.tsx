@@ -15,9 +15,11 @@ import {
   SidebarMenuButton,
   SidebarInset
 } from "@/components/ui/sidebar";
-import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User } from "lucide-react";
+import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // This would normally come from an authentication context
 const isAdmin = true; // For demo purposes, this would be dynamically determined
@@ -25,6 +27,7 @@ const adminName = "Kiggundu Akram"; // Add the admin name
 
 const AdminPage: React.FC = () => {
   const { toast } = useToast();
+  const { isDarkMode, toggleDarkMode } = useTheme();
   
   // For demonstration purposes, we're hardcoding admin access
   // In a real app, this would check user roles from authentication
@@ -123,6 +126,24 @@ const AdminPage: React.FC = () => {
                         <User className="w-4 h-4" />
                         <span>My Profile</span>
                       </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+
+            <SidebarGroup>
+              <SidebarGroupLabel>Settings</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton onClick={toggleDarkMode}>
+                      {isDarkMode ? (
+                        <Sun className="w-4 h-4" />
+                      ) : (
+                        <Moon className="w-4 h-4" />
+                      )}
+                      <span>{isDarkMode ? "Light Mode" : "Dark Mode"}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
