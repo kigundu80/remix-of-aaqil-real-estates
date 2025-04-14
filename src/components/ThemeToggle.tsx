@@ -13,7 +13,7 @@ const ThemeToggle = () => {
       size="icon"
       onClick={toggleDarkMode}
       title={isDarkMode ? "Switch to light theme" : "Switch to dark theme"}
-      className="rounded-full hover:bg-accent"
+      className="rounded-full"
     >
       {isDarkMode ? (
         <Sun className="h-[1.2rem] w-[1.2rem]" />
