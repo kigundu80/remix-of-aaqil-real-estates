@@ -3,46 +3,13 @@ import AuthForm from "@/components/AuthForm";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
-import { useTheme } from "@/contexts/ThemeContext";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Sun, Moon } from "lucide-react";
 
 const LoginPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme();
   
-  // Check if theme is light or dark based on background color
-  const isDarkTheme = theme.background.includes("222.2") || theme.background.includes("240");
-
-  // Toggle theme between light and dark
-  const toggleTheme = () => {
-    if (isDarkTheme) {
-      // Switch to light theme
-      setTheme({
-        primary: "hsl(122 61% 34%)",
-        secondary: "hsl(20 35% 38%)",
-        accent: "hsl(45 100% 51%)",
-        background: "hsl(0 0% 100%)",
-        foreground: "hsl(222.2 84% 4.9%)",
-        card: "hsl(0 0% 100%)",
-        border: "hsl(214.3 31.8% 91.4%)",
-      });
-    } else {
-      // Switch to dark theme
-      setTheme({
-        primary: "hsl(122 61% 34%)",
-        secondary: "hsl(20 35% 38%)",
-        accent: "hsl(45 100% 51%)",
-        background: "hsl(222.2 84% 4.9%)",
-        foreground: "hsl(210 40% 98%)",
-        card: "hsl(222.2 84% 4.9%)",
-        border: "hsl(217.2 32.6% 17.5%)",
-      });
-    }
-  };
-
   const handleLogin = (formData: FormData) => {
     // In a real app, this would be an API call to authenticate the user
     const email = formData.get("email") as string;
@@ -104,16 +71,7 @@ const LoginPage = () => {
       
       <main className="flex-grow flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12">
         <div className="absolute top-4 right-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            title="Toggle theme"
-            className="rounded-full"
-          >
-            {isDarkTheme ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          </Button>
+          <ThemeToggle />
         </div>
         
         <div className="w-full max-w-md px-4">
