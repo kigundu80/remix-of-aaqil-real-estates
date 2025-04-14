@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,8 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Search, SlidersHorizontal, MapPin } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import SearchPanel from "@/components/SearchPanel";
-import { useSearchPanel } from "@/hooks/useSearchPanel";
 
 // Sample property data - in a real app this would come from an API
 const sampleProperties: PropertyType[] = [
@@ -114,7 +113,6 @@ const PropertiesPage = () => {
   const [propertyType, setPropertyType] = useState<string>("all");
   const [location, setLocation] = useState<string>("all");
   const [status, setStatus] = useState<string>("all");
-  const { isSearchOpen, openSearch, closeSearch } = useSearchPanel();
 
   useEffect(() => {
     // In a real app, this would be an API call
@@ -191,7 +189,6 @@ const PropertiesPage = () => {
                   className="pl-10"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  onClick={openSearch}
                 />
               </div>
               <Button 
@@ -325,8 +322,6 @@ const PropertiesPage = () => {
       </main>
       
       <Footer />
-      
-      <SearchPanel isOpen={isSearchOpen} onClose={closeSearch} />
     </div>
   );
 };
