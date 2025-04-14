@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useSearchPanel } from "@/hooks/useSearchPanel";
+import SearchPanel from "./SearchPanel";
 
 const HeroSection = () => {
+  const { isSearchOpen, openSearch, closeSearch } = useSearchPanel();
+
   return (
     <div className="relative">
       {/* Hero Background */}
@@ -36,9 +40,11 @@ const HeroSection = () => {
               type="text"
               placeholder="Search by location, size or price..."
               className="pl-10 bg-white/90 border-0 text-black h-12 w-full"
+              onClick={openSearch}
+              readOnly
             />
           </div>
-          <Button size="lg" className="bg-hm-green hover:bg-hm-green-dark">
+          <Button size="lg" className="bg-hm-green hover:bg-hm-green-dark" onClick={openSearch}>
             Search Properties
           </Button>
         </div>
@@ -52,6 +58,9 @@ const HeroSection = () => {
           </Button>
         </div>
       </div>
+
+      {/* Search Panel */}
+      <SearchPanel isOpen={isSearchOpen} onClose={closeSearch} />
     </div>
   );
 };
