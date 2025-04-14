@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { 
   SidebarProvider,
@@ -15,10 +15,10 @@ import {
   SidebarMenuButton,
   SidebarInset
 } from "@/components/ui/sidebar";
-import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User, Moon, Sun, Bell } from "lucide-react";
+import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/components/ui/use-toast";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
 
 // This would normally come from an authentication context
@@ -28,13 +28,6 @@ const adminName = "Kiggundu Akram"; // Add the admin name
 const AdminPage: React.FC = () => {
   const { toast } = useToast();
   const { isDarkMode, toggleDarkMode } = useTheme();
-  const [unreadCount, setUnreadCount] = useState<number>(0);
-  
-  // Simulate fetching notification count
-  useEffect(() => {
-    // In a real app, this would be fetched from an API or websocket
-    setUnreadCount(5);
-  }, []);
   
   // For demonstration purposes, we're hardcoding admin access
   // In a real app, this would check user roles from authentication
@@ -116,30 +109,6 @@ const AdminPage: React.FC = () => {
                       <a href="/admin/users">
                         <Users className="w-4 h-4" />
                         <span>Manage Users</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-
-            <SidebarGroup>
-              <SidebarGroupLabel>Notifications</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <a href="/admin/messages" className="relative">
-                        <Bell className="w-4 h-4" />
-                        <span>Messages & Activities</span>
-                        {unreadCount > 0 && (
-                          <Badge 
-                            variant="destructive" 
-                            className="ml-2 absolute -right-2 -top-2 h-5 w-5 flex items-center justify-center p-0"
-                          >
-                            {unreadCount}
-                          </Badge>
-                        )}
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
