@@ -14,7 +14,6 @@ const ThemeToggle = () => {
       onClick={toggleDarkMode}
       title={isDarkMode ? "Switch to light theme" : "Switch to dark theme"}
       className="rounded-full hover:bg-accent"
-      aria-label="Toggle theme"
     >
       {isDarkMode ? (
         <Sun className="h-[1.2rem] w-[1.2rem]" />
