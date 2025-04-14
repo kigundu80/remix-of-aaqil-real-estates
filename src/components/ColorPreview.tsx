@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const ColorPreview: React.FC = () => {
-  const { isDarkMode } = useTheme();
+  const { theme } = useTheme();
 
   const colorBlocks = [
     { name: "Primary", value: "bg-primary text-primary-foreground" },
@@ -20,7 +20,7 @@ const ColorPreview: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Color Preview ({isDarkMode ? 'Dark' : 'Light'} Mode)</CardTitle>
+        <CardTitle>Color Preview</CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {colorBlocks.map((color) => (
