@@ -35,7 +35,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
           <img 
@@ -43,9 +43,6 @@ const Navbar = () => {
             alt="HM Property Consultants Logo" 
             className="h-12 w-auto" 
           />
-          <span className="hidden sm:inline-block text-lg font-semibold">
-            HM PROPERTY CONSULTANTS
-          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -102,9 +99,6 @@ const Navbar = () => {
                     alt="HM Property Consultants Logo" 
                     className="h-10 w-auto" 
                   />
-                  <span className="inline-block mt-1 font-semibold">
-                    HM PROPERTY CONSULTANTS
-                  </span>
                 </Link>
                 <ThemeToggle />
               </div>
