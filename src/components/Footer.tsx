@@ -9,12 +9,9 @@ const Footer = () => {
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <Link to="/" className="flex flex-col items-start mb-4">
-              <img 
-                src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
-                alt="HM Property Consultants Logo" 
-                className="h-16 w-auto mb-3 bg-white p-2 rounded" 
-              />
+            <Link to="/" className="flex items-center mb-4">
+              <span className="text-2xl font-bold text-white">HM</span>
+              <span className="ml-2 text-lg font-semibold">Property Consultants</span>
             </Link>
             <p className="text-sm text-gray-200 mb-4">
               Your trusted partner in finding the perfect land property in Uganda.
