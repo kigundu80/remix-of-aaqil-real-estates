@@ -25,8 +25,6 @@ type ThemeContextType = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   resetTheme: () => void;
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -36,12 +34,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     // Try to get the theme from local storage
     const savedTheme = localStorage.getItem("app-theme");
     return savedTheme ? JSON.parse(savedTheme) : defaultTheme;
-  });
-  
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    // Try to get the dark mode setting from local storage
-    const savedMode = localStorage.getItem("dark-mode");
-    return savedMode ? JSON.parse(savedMode) : false;
   });
 
   useEffect(() => {
@@ -68,18 +60,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("app-theme", JSON.stringify(theme));
   }, [theme]);
 
-  useEffect(() => {
-    // Apply dark mode class to html element
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    
-    // Save dark mode setting to local storage
-    localStorage.setItem("dark-mode", JSON.stringify(isDarkMode));
-  }, [isDarkMode]);
-
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
   };
@@ -87,10 +67,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const resetTheme = () => {
     setThemeState(defaultTheme);
     localStorage.removeItem("app-theme");
-  };
-  
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
   };
 
   // Helper function to extract HSL values from a string
@@ -110,7 +86,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, resetTheme, isDarkMode, toggleDarkMode }}>
+    <ThemeContext.Provider value={{ theme, setTheme, resetTheme }}>
       {children}
     </ThemeContext.Provider>
   );
