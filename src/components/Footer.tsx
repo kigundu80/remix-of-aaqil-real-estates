@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Copyright } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -19,7 +18,9 @@ const Footer = () => {
                   className="h-16 w-auto" 
                 />
               </div>
-              <span className="text-xl font-bold text-white mt-3">HM PROPERTY CONSULTANTS</span>
+              <span className="text-xl font-bold text-white mt-3 tracking-tighter">
+                HM PROPERTY CONSULTANTS
+              </span>
             </Link>
             <p className="text-sm text-gray-200 mb-4">
               Your trusted partner in finding the perfect land property in Uganda.
