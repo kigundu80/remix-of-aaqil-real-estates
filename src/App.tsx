@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,47 +29,50 @@ import UserManagementPage from "./components/admin/UserManagementPage";
 import AdminProfilePage from "./components/admin/AdminProfilePage";
 import MessagesPage from "./components/admin/MessagesPage";
 
-const queryClient = new QueryClient();
+const App = () => {
+  // Create a new QueryClient instance inside the function component
+  const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/properties" element={<PropertiesPage />} />
-            <Route path="/properties/:id" element={<PropertyDetailPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/land-buying" element={<LandBuyingPage />} />
-            <Route path="/land-selling" element={<LandSellingPage />} />
-            <Route path="/property-valuation" element={<PropertyValuationPage />} />
-            <Route path="/legal-consultation" element={<LegalConsultationPage />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminPage />}>
-              <Route index element={<AdminDashboard />} />
-              <Route path="properties" element={<PropertyManagementPage />} />
-              <Route path="properties/add" element={<AddPropertyPage />} />
-              <Route path="properties/edit/:id" element={<EditPropertyPage />} />
-              <Route path="users" element={<UserManagementPage />} />
-              <Route path="profile" element={<AdminProfilePage />} />
-              <Route path="messages" element={<MessagesPage />} />
-            </Route>
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/properties" element={<PropertiesPage />} />
+              <Route path="/properties/:id" element={<PropertyDetailPage />} />
+              <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/land-buying" element={<LandBuyingPage />} />
+              <Route path="/land-selling" element={<LandSellingPage />} />
+              <Route path="/property-valuation" element={<PropertyValuationPage />} />
+              <Route path="/legal-consultation" element={<LegalConsultationPage />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminPage />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="properties" element={<PropertyManagementPage />} />
+                <Route path="properties/add" element={<AddPropertyPage />} />
+                <Route path="properties/edit/:id" element={<EditPropertyPage />} />
+                <Route path="users" element={<UserManagementPage />} />
+                <Route path="profile" element={<AdminProfilePage />} />
+                <Route path="messages" element={<MessagesPage />} />
+              </Route>
+              
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
