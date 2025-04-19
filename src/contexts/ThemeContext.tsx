@@ -16,11 +16,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   useEffect(() => {
-    // Apply dark mode class to html element
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    // Apply dark mode class to html element for tailwind dark mode
+    document.documentElement.classList.toggle("dark", isDarkMode);
+    
+    // Update meta theme-color for mobile browsers
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute(
+        "content",
+        isDarkMode ? "rgb(17, 17, 17)" : "rgb(255, 255, 255)"
+      );
     }
     
     // Save dark mode setting to local storage
