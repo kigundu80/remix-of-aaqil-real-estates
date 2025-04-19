@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import PropertyCard from './PropertyCard';
-import { PropertyType } from "@/types/property";
+import PropertyCard, { PropertyType } from './PropertyCard';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 

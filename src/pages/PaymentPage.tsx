@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -199,10 +198,10 @@ const PaymentPage = () => {
                         name="amount"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Amount (USh)</FormLabel>
+                            <FormLabel>Amount (UGX)</FormLabel>
                             <FormControl>
                               <div className="relative">
-                                <span className="absolute left-3 top-3 text-gray-400">USh</span>
+                                <span className="absolute left-3 top-3 text-gray-400">UGX</span>
                                 <Input className="pl-12" placeholder="1,000,000" {...field} />
                               </div>
                             </FormControl>

@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Search, Menu, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -10,21 +11,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Image } from "lucide-react";
 
 const Navbar = () => {
-  const { theme } = useTheme();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isDarkMode } = useTheme();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,47 +37,28 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <Image className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold text-primary">HM</span>
-          <span className="hidden sm:inline-block text-lg font-semibold">
-            Property Consultants
+          <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : ''}`}>
+            <img 
+              src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
+              alt="HM Property Consultants Logo" 
+              className="h-12 w-auto" 
+            />
+          </div>
+          <span className="hidden sm:inline-block text-lg font-semibold text-foreground">
+            HM PROPERTY CONSULTANTS
           </span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          {/* Search Dialog */}
-          <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
-            <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="mr-2">
-                <Search className="h-5 w-5" />
-                <span className="sr-only">Search properties</span>
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-              <div className="space-y-4">
-                <h2 className="text-lg font-semibold">Search Properties</h2>
-                <Input
-                  type="text"
-                  placeholder="Search by location, type, or price range..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full"
-                />
-                {/* Search results will be implemented here */}
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          {/* Navigation Links */}
           {navLinks.map((link) => (
             <Link
               key={link.title}
               to={link.href}
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-hm-green"
             >
               {link.title}
             </Link>
@@ -93,7 +66,7 @@ const Navbar = () => {
           
           {/* Services Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-sm font-medium transition-colors hover:text-primary flex items-center gap-1">
+            <DropdownMenuTrigger className="text-sm font-medium text-foreground/80 transition-colors hover:text-hm-green flex items-center gap-1">
               Services <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -107,6 +80,7 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <div className="hidden md:flex items-center gap-2">
             <Button variant="outline" asChild>
               <Link to="/login">Sign In</Link>
@@ -125,12 +99,27 @@ const Navbar = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <div className="flex items-center justify-between mb-6">
+                <Link to="/" className="flex items-center">
+                  <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : ''}`}>
+                    <img 
+                      src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
+                      alt="HM Property Consultants Logo" 
+                      className="h-10 w-auto" 
+                    />
+                  </div>
+                  <span className="inline-block mt-1 font-semibold text-foreground">
+                    HM PROPERTY CONSULTANTS
+                  </span>
+                </Link>
+                <ThemeToggle />
+              </div>
               <div className="flex flex-col gap-6 pt-10">
                 {navLinks.map((link) => (
                   <Link
                     key={link.title}
                     to={link.href}
-                    className="text-lg font-medium transition-colors hover:text-primary"
+                    className="text-lg font-medium text-foreground/80 transition-colors hover:text-hm-green"
                   >
                     {link.title}
                   </Link>
@@ -138,13 +127,13 @@ const Navbar = () => {
                 
                 {/* Services heading in mobile nav */}
                 <div className="mt-2">
-                  <h3 className="text-lg font-medium mb-2">Services</h3>
+                  <h3 className="text-lg font-medium mb-2 text-foreground">Services</h3>
                   <div className="flex flex-col gap-2 pl-2">
                     {serviceLinks.map((service) => (
                       <Link
                         key={service.title}
                         to={service.href}
-                        className="text-sm font-medium transition-colors hover:text-primary"
+                        className="text-sm font-medium text-foreground/80 transition-colors hover:text-hm-green"
                       >
                         {service.title}
                       </Link>

@@ -1,17 +1,25 @@
 
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Paintbrush, Copyright } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Copyright } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Footer = () => {
+  const { isDarkMode } = useTheme();
+  
   return (
-    <footer className="bg-hm-green text-white">
+    <footer className={`${isDarkMode ? 'bg-gray-800' : 'bg-hm-green'} text-white`}>
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <Link to="/" className="flex items-center mb-4">
-              <span className="text-2xl font-bold text-white">HM</span>
-              <span className="ml-2 text-lg font-semibold">Property Consultants</span>
+            <Link to="/" className="flex flex-col items-start mb-4">
+              <div className="bg-white p-2 rounded">
+                <img 
+                  src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
+                  alt="HM Property Consultants Logo" 
+                  className="h-16 w-auto" 
+                />
+              </div>
+              <span className="text-xl font-bold text-white mt-3">HM PROPERTY CONSULTANTS</span>
             </Link>
             <p className="text-sm text-gray-200 mb-4">
               Your trusted partner in finding the perfect land property in Uganda.
@@ -85,12 +93,6 @@ const Footer = () => {
                   Legal Consultation
                 </Link>
               </li>
-              <li>
-                <Link to="/theme" className="text-gray-200 hover:text-white flex items-center gap-1">
-                  <Paintbrush size={14} />
-                  Customize Theme
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -117,21 +119,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-hm-green-dark mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <div className={`border-t ${isDarkMode ? 'border-gray-700' : 'border-hm-green-dark'} mt-12 pt-6 flex flex-col md:flex-row justify-between items-center`}>
           <div className="flex items-center">
             <Copyright className="h-4 w-4 mr-1" />
             <p className="text-sm text-gray-200">
-              {new Date().getFullYear()} HM Property Consultants. All rights reserved. 
+              {new Date().getFullYear()} HM PROPERTY CONSULTANTS. All rights reserved. 
               <span className="ml-2 font-medium">Created by Karma Aaqil Akram Kiggundu</span>
             </p>
-          </div>
-          <div className="mt-4 md:mt-0 flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm" className="text-white hover:bg-hm-green-dark">
-              <Link to="/theme" className="flex items-center gap-1">
-                <Paintbrush size={16} />
-                <span>Customize Theme</span>
-              </Link>
-            </Button>
           </div>
         </div>
       </div>

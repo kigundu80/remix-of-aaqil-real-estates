@@ -3,8 +3,53 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Construct mailto URL with form data
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`
+    );
+    
+    // Open email client with pre-filled data
+    window.location.href = `mailto:karmaramak@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Show success message
+    toast({
+      title: "Message Sent",
+      description: "Your message has been sent. We'll get back to you soon!",
+      variant: "default",
+    });
+    
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: ""
+    });
+  };
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
@@ -18,7 +63,7 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-bold mb-4">Send Us a Message</h3>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -28,6 +73,8 @@ const ContactSection = () => {
                     id="name"
                     placeholder="Enter your name"
                     required
+                    value={formData.name}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -39,6 +86,8 @@ const ContactSection = () => {
                     type="email"
                     placeholder="Enter your email"
                     required
+                    value={formData.email}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -50,6 +99,8 @@ const ContactSection = () => {
                 <Input
                   id="phone"
                   placeholder="Enter your phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -61,6 +112,8 @@ const ContactSection = () => {
                   id="subject"
                   placeholder="How can we help you?"
                   required
+                  value={formData.subject}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -73,6 +126,8 @@ const ContactSection = () => {
                   placeholder="Tell us more about what you're looking for..."
                   rows={5}
                   required
+                  value={formData.message}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -105,8 +160,8 @@ const ContactSection = () => {
                   <Mail className="h-5 w-5 mr-3 mt-1" />
                   <div>
                     <p className="font-semibold">Email</p>
-                    <p>info@hmproperty.com</p>
-                    <p>sales@hmproperty.com</p>
+                    <p><a href="mailto:karmaramak@gmail.com" className="hover:underline">karmaramak@gmail.com</a></p>
+                    <p><a href="mailto:karmaramak@gmail.com" className="hover:underline">sales@hmproperty.com</a></p>
                   </div>
                 </div>
                 <div className="flex items-start">

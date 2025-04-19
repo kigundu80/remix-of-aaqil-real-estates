@@ -54,7 +54,7 @@ const PropertySidebar = ({
           <DollarSign className="h-5 w-5 text-hm-green mr-3 mt-1" />
           <div>
             <p className="text-sm text-gray-500">Price</p>
-            <p>USh {price.toLocaleString()}</p>
+            <p>UGX {price.toLocaleString()}</p>
           </div>
         </div>
         <div className="flex items-start">

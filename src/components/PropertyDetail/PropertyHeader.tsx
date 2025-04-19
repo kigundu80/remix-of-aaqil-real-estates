@@ -45,7 +45,7 @@ const PropertyHeader = ({
       </div>
       <div className="flex flex-col items-end">
         <div className="text-2xl font-bold text-hm-green mb-1">
-          USh {price.toLocaleString()}
+          UGX {price.toLocaleString()}
         </div>
         <div className="flex items-center text-sm text-gray-600">
           <span>{size}</span>
