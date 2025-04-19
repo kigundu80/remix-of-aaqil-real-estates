@@ -25,7 +25,7 @@ const PropertyManagementTable: React.FC = () => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', { 
       style: 'currency', 
-      currency: 'USD',
+      currency: 'UGX',
       maximumFractionDigits: 0
     }).format(price);
   };

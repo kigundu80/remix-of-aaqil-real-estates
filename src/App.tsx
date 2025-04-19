@@ -19,7 +19,6 @@ import LandBuyingPage from "./pages/LandBuyingPage";
 import LandSellingPage from "./pages/LandSellingPage";
 import PropertyValuationPage from "./pages/PropertyValuationPage";
 import LegalConsultationPage from "./pages/LegalConsultationPage";
-import ThemeSelectionPage from "./pages/ThemeSelectionPage";
 import AdminPage from "./pages/AdminPage";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import PropertyManagementPage from "./components/admin/PropertyManagementPage";
@@ -27,6 +26,7 @@ import AddPropertyPage from "./components/admin/AddPropertyPage";
 import EditPropertyPage from "./components/admin/EditPropertyPage";
 import UserManagementPage from "./components/admin/UserManagementPage";
 import AdminProfilePage from "./components/admin/AdminProfilePage";
+import MessagesPage from "./components/admin/MessagesPage";
 
 const queryClient = new QueryClient();
 
@@ -51,7 +51,6 @@ const App = () => (
             <Route path="/land-selling" element={<LandSellingPage />} />
             <Route path="/property-valuation" element={<PropertyValuationPage />} />
             <Route path="/legal-consultation" element={<LegalConsultationPage />} />
-            <Route path="/theme" element={<ThemeSelectionPage />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminPage />}>
@@ -61,6 +60,7 @@ const App = () => (
               <Route path="properties/edit/:id" element={<EditPropertyPage />} />
               <Route path="users" element={<UserManagementPage />} />
               <Route path="profile" element={<AdminProfilePage />} />
+              <Route path="messages" element={<MessagesPage />} />
             </Route>
             
             <Route path="*" element={<NotFound />} />
