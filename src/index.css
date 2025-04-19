@@ -14,7 +14,7 @@
     --popover-foreground: 222.2 84% 4.9%;
 
     --primary: 122 61% 34%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 210 40% 98%;
 
     --secondary: 20 35% 38%;
     --secondary-foreground: 0 0% 98%;
@@ -33,20 +33,6 @@
     --ring: 122 61% 34%;
 
     --radius: 0.5rem;
-
-    --sidebar-background: 122 61% 34%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 122 61% 24%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 45 100% 51%;
-    --sidebar-accent-foreground: 24 9.8% 10%;
-    --sidebar-border: 122 61% 44%;
-    --sidebar-ring: 122 61% 34%;
-
-    /* Add app-wide background and text color transitions */
-    * {
-      @apply transition-colors duration-200;
-    }
   }
 
   .dark {
@@ -60,7 +46,7 @@
     --popover-foreground: 210 40% 98%;
 
     --primary: 122 61% 34%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 210 40% 98%;
 
     --secondary: 20 35% 38%;
     --secondary-foreground: 0 0% 98%;
@@ -77,21 +63,12 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 122 61% 54%;
-
-    --sidebar-background: 217.2 32.6% 17.5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 122 61% 34%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 45 100% 51%;
-    --sidebar-accent-foreground: 24 9.8% 10%;
-    --sidebar-border: 217.2 32.6% 27.5%;
-    --sidebar-ring: 122 61% 34%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-200;
   }
 
   body {
@@ -104,7 +81,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif text-foreground;
+    @apply text-foreground;
   }
 
   /* Theme-aware card and container styles */
@@ -114,11 +91,6 @@
 
   .container {
     @apply bg-background;
-  }
-
-  /* Theme transitions */
-  .theme-transition {
-    @apply transition-colors duration-200;
   }
 }
 
