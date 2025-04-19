@@ -21,7 +21,7 @@ const PropertyStatsCard: React.FC<PropertyStatsCardProps> = ({
   
   // Format value based on type (currency or number)
   const formattedValue = title.toLowerCase().includes('sales') 
-    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'UGX' }).format(value) 
+    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value) 
     : value.toLocaleString();
 
   return (
