@@ -19,6 +19,7 @@ import LandBuyingPage from "./pages/LandBuyingPage";
 import LandSellingPage from "./pages/LandSellingPage";
 import PropertyValuationPage from "./pages/PropertyValuationPage";
 import LegalConsultationPage from "./pages/LegalConsultationPage";
+import ThemeSelectionPage from "./pages/ThemeSelectionPage";
 import AdminPage from "./pages/AdminPage";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import PropertyManagementPage from "./components/admin/PropertyManagementPage";
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/land-selling" element={<LandSellingPage />} />
             <Route path="/property-valuation" element={<PropertyValuationPage />} />
             <Route path="/legal-consultation" element={<LegalConsultationPage />} />
+            <Route path="/theme" element={<ThemeSelectionPage />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminPage />}>
