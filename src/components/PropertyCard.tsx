@@ -1,31 +1,16 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PropertyType } from "@/types/property";
 
-export interface PropertyType {
-  id: string;
-  title: string;
-  location: string;
-  price: number;
-  size: string;
-  imageUrl: string;
-  featured?: boolean;
-  status: 'For Sale' | 'Sold' | 'Pending';
-}
-
-interface PropertyCardProps {
-  property: PropertyType;
-}
-
-const PropertyCard = ({ property }: PropertyCardProps) => {
+const PropertyCard = ({ property }: { property: PropertyType }) => {
   const { id, title, location, price, size, imageUrl, featured, status } = property;
 
   const statusColor = 
-    status === 'For Sale' ? 'bg-green-100 text-green-800' :
-    status === 'Sold' ? 'bg-red-100 text-red-800' :
+    status === 'available' ? 'bg-green-100 text-green-800' :
+    status === 'sold' ? 'bg-red-100 text-red-800' :
     'bg-yellow-100 text-yellow-800';
 
   return (

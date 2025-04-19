@@ -17,6 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Image } from "lucide-react";
 
 const Navbar = () => {
   const { theme } = useTheme();
@@ -47,6 +48,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
+          <Image className="h-8 w-8 text-primary" />
           <span className="text-2xl font-bold text-primary">HM</span>
           <span className="hidden sm:inline-block text-lg font-semibold">
             Property Consultants

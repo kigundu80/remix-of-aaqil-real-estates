@@ -1,5 +1,5 @@
 
-import { PropertyCard } from "@/components/PropertyCard";
+import PropertyCard from "@/components/PropertyCard";
 import { PropertyType } from "@/types/property";
 import { Loader2 } from "lucide-react";
 

@@ -16,7 +16,7 @@ export const searchProperties = async (query: string): Promise<PropertyType[]> =
       size: "0.5 Acres",
       imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef",
       featured: true,
-      status: "For Sale"
+      status: "available"
     },
     // ... more mock properties would be here
   ];
