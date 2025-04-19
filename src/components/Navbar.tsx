@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, User, ChevronDown } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -11,8 +10,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTheme } from "@/contexts/ThemeContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 const Navbar = () => {
+  const { theme } = useTheme();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -37,7 +47,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-hm-green">HM</span>
+          <span className="text-2xl font-bold text-primary">HM</span>
           <span className="hidden sm:inline-block text-lg font-semibold">
             Property Consultants
           </span>
@@ -45,11 +55,35 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
+          {/* Search Dialog */}
+          <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="icon" className="mr-2">
+                <Search className="h-5 w-5" />
+                <span className="sr-only">Search properties</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
+              <div className="space-y-4">
+                <h2 className="text-lg font-semibold">Search Properties</h2>
+                <Input
+                  type="text"
+                  placeholder="Search by location, type, or price range..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full"
+                />
+                {/* Search results will be implemented here */}
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          {/* Navigation Links */}
           {navLinks.map((link) => (
             <Link
               key={link.title}
               to={link.href}
-              className="text-sm font-medium transition-colors hover:text-hm-green"
+              className="text-sm font-medium transition-colors hover:text-primary"
             >
               {link.title}
             </Link>
@@ -57,7 +91,7 @@ const Navbar = () => {
           
           {/* Services Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-sm font-medium transition-colors hover:text-hm-green flex items-center gap-1">
+            <DropdownMenuTrigger className="text-sm font-medium transition-colors hover:text-primary flex items-center gap-1">
               Services <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -94,7 +128,7 @@ const Navbar = () => {
                   <Link
                     key={link.title}
                     to={link.href}
-                    className="text-lg font-medium transition-colors hover:text-hm-green"
+                    className="text-lg font-medium transition-colors hover:text-primary"
                   >
                     {link.title}
                   </Link>
@@ -108,7 +142,7 @@ const Navbar = () => {
                       <Link
                         key={service.title}
                         to={service.href}
-                        className="text-sm font-medium transition-colors hover:text-hm-green"
+                        className="text-sm font-medium transition-colors hover:text-primary"
                       >
                         {service.title}
                       </Link>
