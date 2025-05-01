@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarInset
 } from "@/components/ui/sidebar";
-import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User, Moon, Sun, Bell } from "lucide-react";
+import { Building, PlusCircle, Users, LayoutDashboard, LogOut, User, Moon, Sun, Bell, Bitcoin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
@@ -116,6 +116,22 @@ const AdminPage: React.FC = () => {
                       <a href="/admin/users">
                         <Users className="w-4 h-4" />
                         <span>Manage Users</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+
+            <SidebarGroup>
+              <SidebarGroupLabel>VIP Features</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a href="/admin/vip">
+                        <Bitcoin className="w-4 h-4" />
+                        <span>Data Conversion</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
