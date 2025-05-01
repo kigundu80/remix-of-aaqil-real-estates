@@ -13,12 +13,16 @@ interface UserDataTableProps {
   searchQuery: string;
   isConverted: boolean;
   currencyType: string;
+  notificationsEnabled: boolean;
+  accountNumber: string;
 }
 
 export const UserDataTable: React.FC<UserDataTableProps> = ({ 
   searchQuery,
   isConverted,
-  currencyType
+  currencyType,
+  notificationsEnabled,
+  accountNumber
 }) => {
   const columns = ["User", "Data Points", "Converted Value", "Last Active", "Status"];
   
