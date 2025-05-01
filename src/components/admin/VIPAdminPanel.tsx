@@ -19,9 +19,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Database, Users, Search, DollarSign, Bitcoin } from "lucide-react";
+import { Database, Users, Search, DollarSign, Bitcoin, Bell } from "lucide-react";
 import { UserDataTable } from "./UserDataTable";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 
 const VIPAdminPanel: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,8 @@ const VIPAdminPanel: React.FC = () => {
   const [currency, setCurrency] = useState("btc");
   const [conversionRate, setConversionRate] = useState(0.00005);
   const [isConverted, setIsConverted] = useState(false);
+  const [accountNumber, setAccountNumber] = useState("01310016042209");
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const { toast } = useToast();
 
   // Mock conversion rates - in a real app this would come from an API
@@ -36,7 +39,8 @@ const VIPAdminPanel: React.FC = () => {
     btc: 0.00005,
     eth: 0.0008,
     usdt: 1.0,
-    sol: 0.05
+    sol: 0.05,
+    ugx: 3.75 // 1 data point ≈ 3.75 UGX
   };
 
   const handleCurrencyChange = (value: string) => {
@@ -52,17 +56,24 @@ const VIPAdminPanel: React.FC = () => {
       setIsLoading(false);
       setIsConverted(true);
       
-      toast({
-        title: "Conversion Complete",
-        description: "User data has been successfully converted to digital currency.",
-      });
+      if (notificationsEnabled) {
+        toast({
+          title: "Conversion Complete",
+          description: `User data has been successfully converted to ${currency.toUpperCase()} and sent to account ${accountNumber}.`,
+        });
+      } else {
+        toast({
+          title: "Conversion Complete",
+          description: "User data has been successfully converted to digital currency.",
+        });
+      }
     }, 1500);
   };
 
   const handleExportData = () => {
     toast({
       title: "Data Exported",
-      description: `User data has been exported in ${currency.toUpperCase()} format.`,
+      description: `User data has been exported in ${currency.toUpperCase()} format to account ${accountNumber}.`,
     });
   };
 
@@ -142,6 +153,19 @@ const VIPAdminPanel: React.FC = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="account">Receiving Account</Label>
+              <Input
+                id="account"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+                placeholder="Enter account number"
+              />
+              <p className="text-xs text-muted-foreground">
+                Converted currency will be sent to this account
+              </p>
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="currency">Target Currency</Label>
               <Select
                 value={currency}
@@ -155,6 +179,7 @@ const VIPAdminPanel: React.FC = () => {
                   <SelectItem value="eth">Ethereum (ETH)</SelectItem>
                   <SelectItem value="usdt">Tether (USDT)</SelectItem>
                   <SelectItem value="sol">Solana (SOL)</SelectItem>
+                  <SelectItem value="ugx">Uganda Shillings (UGX)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -175,6 +200,17 @@ const VIPAdminPanel: React.FC = () => {
                 </span>
               </div>
             </div>
+
+            <div className="flex items-center space-x-2 pt-2">
+              <Switch
+                id="notifications"
+                checked={notificationsEnabled}
+                onCheckedChange={setNotificationsEnabled}
+              />
+              <Label htmlFor="notifications" className="cursor-pointer">
+                Enable transaction notifications
+              </Label>
+            </div>
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button
@@ -187,8 +223,10 @@ const VIPAdminPanel: React.FC = () => {
             <Button 
               onClick={handleConvertData}
               disabled={isLoading}
+              className="flex items-center gap-2"
             >
               {isLoading ? "Converting..." : "Convert Data"}
+              {notificationsEnabled && <Bell className="h-4 w-4 ml-1" />}
             </Button>
           </CardFooter>
         </Card>
@@ -225,7 +263,13 @@ const VIPAdminPanel: React.FC = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <UserDataTable searchQuery={searchQuery} isConverted={isConverted} currencyType={currency} />
+          <UserDataTable 
+            searchQuery={searchQuery} 
+            isConverted={isConverted} 
+            currencyType={currency} 
+            notificationsEnabled={notificationsEnabled}
+            accountNumber={accountNumber}
+          />
         </CardContent>
         <CardFooter className="border-t px-6 py-4">
           <p className="text-xs text-muted-foreground">

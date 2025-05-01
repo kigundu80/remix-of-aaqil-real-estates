@@ -7,4 +7,5 @@ export interface UserData {
   value: number; // BTC value
   lastActive: string;
   status: "active" | "inactive" | "pending";
+  notified?: boolean; // Track if user has been notified about conversion
 }
