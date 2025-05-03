@@ -1,4 +1,3 @@
-
 import React from "react";
 import { 
   SidebarGroup, 
@@ -18,6 +17,7 @@ import {
   Bitcoin 
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 interface SidebarGroupProps {
   unreadCount?: number;
@@ -91,7 +91,7 @@ export const UsersGroup: React.FC = () => {
   );
 };
 
-export const VIPFeaturesGroup: React.FC = () => {
+export const VIPFeaturesGroup = () => {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>VIP Features</SidebarGroupLabel>
@@ -99,10 +99,10 @@ export const VIPFeaturesGroup: React.FC = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <a href="/admin/vip">
-                <Bitcoin className="w-4 h-4" />
-                <span>Data Conversion</span>
-              </a>
+              <Link to="/vip-admin">
+                <Bitcoin className="h-4 w-4" />
+                <span>VIP Admin Panel</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
