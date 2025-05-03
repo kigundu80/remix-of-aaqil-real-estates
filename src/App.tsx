@@ -31,6 +31,7 @@ import UserManagementPage from "./components/admin/UserManagementPage";
 import AdminProfilePage from "./components/admin/AdminProfilePage";
 import MessagesPage from "./components/admin/MessagesPage";
 import ThemeSelectionPage from "./pages/ThemeSelectionPage";
+import CustomThemePage from "./pages/CustomThemePage";
 
 const App = () => {
   // Create a new QueryClient instance inside the function component
@@ -70,6 +71,7 @@ const App = () => {
                 <Route path="profile" element={<AdminProfilePage />} />
                 <Route path="messages" element={<MessagesPage />} />
                 <Route path="theme" element={<ThemeSelectionPage />} />
+                <Route path="custom-theme" element={<CustomThemePage />} />
               </Route>
               
               <Route path="*" element={<NotFound />} />
