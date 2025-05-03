@@ -11,9 +11,6 @@ const ChartContainer = React.forwardRef<HTMLDivElement, ChartContainerProps>(
     const uniqueId = React.useId();
     const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
 
-    // Ensure we're passing a ReactElement, not just a ReactNode
-    const onlyChild = React.Children.only(children) as React.ReactElement;
-
     return (
       <ChartContext.Provider value={{ config }}>
         <div
@@ -27,7 +24,7 @@ const ChartContainer = React.forwardRef<HTMLDivElement, ChartContainerProps>(
         >
           <ChartStyle id={chartId} config={config} />
           <RechartsPrimitive.ResponsiveContainer>
-            {onlyChild}
+            {React.Children.only(children)}
           </RechartsPrimitive.ResponsiveContainer>
         </div>
       </ChartContext.Provider>

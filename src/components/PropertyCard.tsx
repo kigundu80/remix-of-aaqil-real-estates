@@ -60,7 +60,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Price</p>
-            <p className="font-bold text-hm-green">UGX {price.toLocaleString()}</p>
+            <p className="font-bold text-hm-green">USh {price.toLocaleString()}</p>
           </div>
         </div>
       </CardContent>

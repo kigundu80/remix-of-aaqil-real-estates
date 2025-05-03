@@ -1,11 +1,11 @@
 
 import { useState, useRef } from 'react';
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import { X, Image, Upload, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { validateImage } from "@/utils/imageUtils";
-import ImageUploadControls from "@/components/ImageUploadControls";
-import ImagePreviewGrid from "@/components/ImagePreviewGrid";
 
 interface ImageUploaderProps {
   onImagesUploaded?: (images: File[]) => void;
@@ -45,20 +45,35 @@ const ImageUploader = ({
 
     // Process each file
     Array.from(files).forEach(file => {
-      if (validateImage(file)) {
-        newFiles.push(file);
-        newPreviewUrls.push(URL.createObjectURL(file));
+      // Check file type
+      if (!file.type.match('image/(jpeg|jpg|png)')) {
+        toast({
+          title: "Invalid file type",
+          description: "Only JPG, JPEG, and PNG files are allowed.",
+          variant: "destructive",
+        });
+        return;
       }
+
+      // Check file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Maximum file size is 5MB.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      newFiles.push(file);
+      newPreviewUrls.push(URL.createObjectURL(file));
     });
 
-    if (newFiles.length > 0) {
-      const updatedImages = [...selectedImages, ...newFiles];
-      setSelectedImages(updatedImages);
-      setPreviewUrls(prev => [...prev, ...newPreviewUrls]);
+    setSelectedImages(prev => [...prev, ...newFiles]);
+    setPreviewUrls(prev => [...prev, ...newPreviewUrls]);
 
-      if (onImagesUploaded) {
-        onImagesUploaded(updatedImages);
-      }
+    if (newFiles.length > 0 && onImagesUploaded) {
+      onImagesUploaded([...selectedImages, ...newFiles]);
     }
 
     // Reset the input value to allow selecting the same file again
@@ -113,13 +128,36 @@ const ImageUploader = ({
         <Label htmlFor="images">{label}</Label>
         <p className="text-sm text-gray-500">{description}</p>
         
-        <ImageUploadControls
-          onSelectClick={() => fileInputRef.current?.click()}
-          onUploadClick={simulateUpload}
-          isUploading={isUploading}
-          hasSelectedImages={selectedImages.length > 0}
-        />
-        
+        <div className="flex items-center gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
+            className="flex-1"
+          >
+            <Image className="h-4 w-4 mr-2" />
+            Select Images
+          </Button>
+          <Button
+            type="button"
+            onClick={simulateUpload}
+            disabled={isUploading || selectedImages.length === 0}
+            className="flex-1"
+          >
+            {isUploading ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Uploading...
+              </>
+            ) : (
+              <>
+                <Upload className="h-4 w-4 mr-2" />
+                Upload Images
+              </>
+            )}
+          </Button>
+        </div>
         <Input
           id="images"
           type="file"
@@ -131,11 +169,33 @@ const ImageUploader = ({
         />
       </div>
 
-      <ImagePreviewGrid
-        previewUrls={previewUrls}
-        onRemoveImage={handleRemoveImage}
-        maxImages={maxImages}
-      />
+      {previewUrls.length > 0 && (
+        <div className="mt-4">
+          <p className="text-sm font-medium mb-2">
+            Selected Images ({selectedImages.length}/{maxImages})
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {previewUrls.map((url, index) => (
+              <Card key={index} className="relative overflow-hidden group">
+                <img
+                  src={url}
+                  alt={`Preview ${index + 1}`}
+                  className="w-full h-24 object-cover"
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-1 right-1 h-6 w-6 opacity-80 hover:opacity-100"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
