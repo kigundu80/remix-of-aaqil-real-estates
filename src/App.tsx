@@ -30,6 +30,7 @@ import EditPropertyPage from "./components/admin/EditPropertyPage";
 import UserManagementPage from "./components/admin/UserManagementPage";
 import AdminProfilePage from "./components/admin/AdminProfilePage";
 import MessagesPage from "./components/admin/MessagesPage";
+import ThemeSelectionPage from "./pages/ThemeSelectionPage";
 
 const App = () => {
   // Create a new QueryClient instance inside the function component
@@ -68,6 +69,7 @@ const App = () => {
                 <Route path="users" element={<UserManagementPage />} />
                 <Route path="profile" element={<AdminProfilePage />} />
                 <Route path="messages" element={<MessagesPage />} />
+                <Route path="theme" element={<ThemeSelectionPage />} />
               </Route>
               
               <Route path="*" element={<NotFound />} />

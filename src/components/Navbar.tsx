@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -8,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const Navbar = () => {
@@ -72,7 +72,6 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           <div className="hidden md:flex items-center gap-2">
             <Button variant="outline" asChild>
               <Link to="/login">Sign In</Link>
@@ -104,7 +103,6 @@ const Navbar = () => {
                     HM PROPERTY CONSULTANTS
                   </span>
                 </Link>
-                <ThemeToggle />
               </div>
               <div className="flex flex-col gap-6 pt-10">
                 {navLinks.map((link) => (

@@ -3,7 +3,6 @@ import AuthForm from "@/components/AuthForm";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
-import ThemeToggle from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -70,10 +69,6 @@ const LoginPage = () => {
       <Navbar />
       
       <main className="flex-grow flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12">
-        <div className="absolute top-4 right-4">
-          <ThemeToggle />
-        </div>
-        
         <div className="w-full max-w-md px-4">
           <AuthForm type="login" onSubmit={handleLogin} />
         </div>
