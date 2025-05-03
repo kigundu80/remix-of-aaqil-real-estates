@@ -14,7 +14,8 @@ import {
   LayoutDashboard, 
   User, 
   Bell, 
-  Bitcoin 
+  Bitcoin,
+  Shield 
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -23,20 +24,43 @@ interface SidebarGroupProps {
   unreadCount?: number;
 }
 
-export const DashboardGroup: React.FC = () => {
+interface DashboardGroupProps {
+  isVipMode?: boolean;
+}
+
+export const DashboardGroup: React.FC<DashboardGroupProps> = ({ isVipMode = false }) => {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Main</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <a href="/admin">
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
-              </a>
-            </SidebarMenuButton>
+            {isVipMode ? (
+              <SidebarMenuButton asChild>
+                <Link to="/vip-admin">
+                  <Shield className="w-4 h-4 text-red-500" />
+                  <span>VIP Dashboard</span>
+                </Link>
+              </SidebarMenuButton>
+            ) : (
+              <SidebarMenuButton asChild>
+                <Link to="/admin">
+                  <LayoutDashboard className="w-4 h-4" />
+                  <span>Dashboard</span>
+                </Link>
+              </SidebarMenuButton>
+            )}
           </SidebarMenuItem>
+          {isVipMode && (
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="/admin">
+                  <LayoutDashboard className="w-4 h-4" />
+                  <span>Regular Admin</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
@@ -99,7 +123,7 @@ export const VIPFeaturesGroup = () => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link to="/vip-admin">
+              <Link to="/vip-login">
                 <Bitcoin className="h-4 w-4" />
                 <span>VIP Admin Panel</span>
               </Link>

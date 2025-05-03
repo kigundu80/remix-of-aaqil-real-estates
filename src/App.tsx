@@ -22,6 +22,7 @@ import PropertyValuationPage from "./pages/PropertyValuationPage";
 import LegalConsultationPage from "./pages/LegalConsultationPage";
 import AdminPage from "./pages/AdminPage";
 import VIPAdminPage from "./pages/VIPAdminPage";
+import VIPLoginPage from "./pages/VIPLoginPage";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import PropertyManagementPage from "./components/admin/PropertyManagementPage";
 import AddPropertyPage from "./components/admin/AddPropertyPage";
@@ -55,6 +56,7 @@ const App = () => {
               <Route path="/land-selling" element={<LandSellingPage />} />
               <Route path="/property-valuation" element={<PropertyValuationPage />} />
               <Route path="/legal-consultation" element={<LegalConsultationPage />} />
+              <Route path="/vip-login" element={<VIPLoginPage />} />
               <Route path="/vip-admin" element={<VIPAdminPage />} />
               
               {/* Admin Routes */}
