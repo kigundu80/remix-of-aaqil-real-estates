@@ -1,17 +1,9 @@
 
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Palette, Paintbrush } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useToast } from "@/hooks/use-toast";
 import ColorPreview from "@/components/ColorPreview";
-import { cn } from "@/lib/utils";
+import ThemeTabs from "@/components/theme/ThemeTabs";
 
 interface ColorOption {
   name: string;
@@ -20,7 +12,7 @@ interface ColorOption {
 }
 
 const CustomThemePage = () => {
-  const { isDarkMode, toggleDarkMode } = useTheme();
+  const { isDarkMode } = useTheme();
   const { toast } = useToast();
   
   // Predefined color palettes
@@ -96,6 +88,11 @@ const CustomThemePage = () => {
     }));
   };
 
+  const resetToPreset = () => {
+    setSelectedTab("presets");
+    handlePaletteChange(activePalette);
+  };
+
   return (
     <div className="container py-10">
       <div className="flex flex-col items-center justify-center mb-10 text-center">
@@ -105,134 +102,17 @@ const CustomThemePage = () => {
         </p>
       </div>
 
-      <Tabs 
-        defaultValue="presets" 
-        value={selectedTab} 
-        onValueChange={setSelectedTab}
-        className="w-full max-w-4xl mx-auto"
-      >
-        <TabsList className="grid grid-cols-2 mb-8">
-          <TabsTrigger value="presets">
-            <Palette className="mr-2 h-4 w-4" />
-            Color Presets
-          </TabsTrigger>
-          <TabsTrigger value="custom">
-            <Paintbrush className="mr-2 h-4 w-4" />
-            Custom Colors
-          </TabsTrigger>
-        </TabsList>
-        
-        {/* Theme Presets */}
-        <TabsContent value="presets" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Theme Presets</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-8">
-                <div>
-                  <Label className="mb-2 block">Select Theme Palette</Label>
-                  <ToggleGroup 
-                    type="single" 
-                    value={activePalette}
-                    onValueChange={(value) => value && handlePaletteChange(value as any)}
-                    className="justify-start"
-                  >
-                    <ToggleGroupItem value="green" className="flex gap-2 items-center">
-                      <span className="w-4 h-4 rounded-full bg-hm-green"></span>
-                      Green (Default)
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="purple" className="flex gap-2 items-center">
-                      <span className="w-4 h-4 rounded-full" style={{ backgroundColor: "#9b87f5" }}></span>
-                      Purple
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="blue" className="flex gap-2 items-center">
-                      <span className="w-4 h-4 rounded-full" style={{ backgroundColor: "#0EA5E9" }}></span>
-                      Blue
-                    </ToggleGroupItem>
-                  </ToggleGroup>
-                </div>
-
-                <div>
-                  <Label className="mb-2 block">Preview</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                    {presetPalettes[activePalette].map((color) => (
-                      <div key={color.name} className="flex flex-col items-center space-y-1.5">
-                        <div 
-                          className="w-full h-16 rounded-md flex items-center justify-center" 
-                          style={{ backgroundColor: color.value, color: color.foreground }}
-                        >
-                          {color.name}
-                        </div>
-                        <p className="text-xs text-center text-muted-foreground">{color.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex justify-end">
-                  <Button onClick={applyCustomTheme}>Apply Theme</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        {/* Custom Colors */}
-        <TabsContent value="custom" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Custom Theme Colors</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-8">
-                <div className="space-y-4">
-                  {Object.entries(customColors).map(([key, color]) => (
-                    <div key={key} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                      <Label htmlFor={`color-${key}`} className="md:col-span-1">{color.name}</Label>
-                      <div className="md:col-span-2">
-                        <Input
-                          id={`color-${key}`}
-                          type="color"
-                          value={color.value}
-                          onChange={(e) => handleColorChange(key, e.target.value)}
-                          className="h-10 cursor-pointer"
-                        />
-                      </div>
-                      <div 
-                        className={cn(
-                          "h-10 rounded-md flex items-center justify-center", 
-                          key === "accent" ? "text-black" : "text-white"
-                        )} 
-                        style={{ backgroundColor: color.value }}
-                      >
-                        {color.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <Separator />
-
-                <div className="flex justify-between">
-                  <Button 
-                    variant="outline"
-                    onClick={() => {
-                      setSelectedTab("presets");
-                      handlePaletteChange(activePalette);
-                    }}
-                  >
-                    Reset to Preset
-                  </Button>
-                  <Button onClick={applyCustomTheme}>
-                    Apply Custom Colors
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      <ThemeTabs 
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        activePalette={activePalette}
+        presetPalettes={presetPalettes}
+        customColors={customColors}
+        handlePaletteChange={handlePaletteChange}
+        handleColorChange={handleColorChange}
+        applyCustomTheme={applyCustomTheme}
+        resetToPreset={resetToPreset}
+      />
 
       <div className="mt-12">
         <ColorPreview />
