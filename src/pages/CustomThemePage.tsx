@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Palette, Swatch } from "lucide-react";
+import { Palette, Paintbrush } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useToast } from "@/hooks/use-toast";
 import ColorPreview from "@/components/ColorPreview";
@@ -117,7 +117,7 @@ const CustomThemePage = () => {
             Color Presets
           </TabsTrigger>
           <TabsTrigger value="custom">
-            <Swatch className="mr-2 h-4 w-4" />
+            <Paintbrush className="mr-2 h-4 w-4" />
             Custom Colors
           </TabsTrigger>
         </TabsList>
