@@ -1,6 +1,10 @@
 
 import * as React from "react";
-import { ChartConfig, ChartContextProps } from "./types";
+
+// Create a simple default context value
+export type ChartContextProps = {
+  config?: Record<string, any>;
+};
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
 

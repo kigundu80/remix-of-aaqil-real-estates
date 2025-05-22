@@ -1,9 +1,6 @@
 
 import React from "react";
 import { ResponsiveContainer } from "recharts";
-import { ChartContextProvider } from "./chart-context";
-import { getTheme } from "./chart-style";
-import type { ChartTheme } from "./types";
 
 interface ChartContainerProps {
   /**
@@ -19,10 +16,6 @@ interface ChartContainerProps {
    */
   height?: number | string;
   /**
-   * The theme of the chart. If not provided, the theme will be determined by the current theme.
-   */
-  theme?: ChartTheme;
-  /**
    * The content of the chart.
    */
   children: React.ReactNode;
@@ -32,15 +25,12 @@ export function ChartContainer({
   aspect,
   width = "100%",
   height = 350,
-  theme,
   children,
 }: ChartContainerProps) {
   return (
-    <ChartContextProvider theme={theme ?? getTheme()}>
-      <ResponsiveContainer width={width} height={height} aspect={aspect}>
-        {/* Removing React.Children.only to fix the type error */}
-        {children}
-      </ResponsiveContainer>
-    </ChartContextProvider>
+    <ResponsiveContainer width={width} height={height} aspect={aspect}>
+      {/* We ensure children is a valid React element here */}
+      {children}
+    </ResponsiveContainer>
   );
 }

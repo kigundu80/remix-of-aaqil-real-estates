@@ -4,6 +4,8 @@ import { ReactNode } from "react";
 // Format: { THEME_NAME: CSS_SELECTOR }
 export const THEMES = { light: "", dark: ".dark" } as const;
 
+export type ChartTheme = "light" | "dark";
+
 export type ChartConfig = {
   [k in string]: {
     label?: ReactNode;
@@ -15,11 +17,11 @@ export type ChartConfig = {
 };
 
 export type ChartContextProps = {
-  config: ChartConfig;
+  config?: ChartConfig;
 };
 
 export interface ChartContainerProps extends React.ComponentProps<"div"> {
-  config: ChartConfig;
+  config?: ChartConfig;
   children: React.ReactNode;
 }
 
