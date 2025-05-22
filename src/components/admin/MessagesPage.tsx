@@ -1,23 +1,14 @@
-
 import React, { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { MessageList } from "@/components/admin/MessageList";
-import { ActivitiesLog } from "@/components/admin/ActivitiesLog";
-import { Badge } from "@/components/ui/badge";
-import { Bell, Bot } from "lucide-react";
+import { MessagesTab } from "@/components/admin/tabs/MessagesTab";
+import { ActivitiesTab } from "@/components/admin/tabs/ActivitiesTab";
+import { TabNotificationBadge } from "@/components/admin/notifications/TabNotificationBadge";
+import { NotificationsHeader } from "@/components/admin/notifications/NotificationsHeader";
 
 // Mock data for demonstration
 const mockMessages = [
@@ -106,132 +97,43 @@ const mockActivities = [
 ];
 
 const MessagesPage: React.FC = () => {
-  const { toast } = useToast();
   const [messages, setMessages] = useState(mockMessages);
   const [activities, setActivities] = useState(mockActivities);
   
   const unreadMessagesCount = messages.filter(msg => !msg.read).length;
   const unseenActivitiesCount = activities.filter(act => !act.seen).length;
-  
-  const markAllMessagesAsRead = () => {
-    setMessages(messages.map(msg => ({ ...msg, read: true })));
-    toast({
-      title: "Messages Updated",
-      description: "All messages have been marked as read.",
-    });
-  };
-  
-  const markAllActivitiesAsSeen = () => {
-    setActivities(activities.map(act => ({ ...act, seen: true })));
-    toast({
-      title: "Activities Updated",
-      description: "All activities have been marked as seen.",
-    });
-  };
+  const totalNotifications = unreadMessagesCount + unseenActivitiesCount;
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">Notifications</h1>
-            <Bell className="h-5 w-5 text-amber-500" />
-            {(unreadMessagesCount + unseenActivitiesCount > 0) && (
-              <Badge variant="destructive" className="ml-2">
-                {unreadMessagesCount + unseenActivitiesCount} new
-              </Badge>
-            )}
-          </div>
-          <p className="text-muted-foreground">
-            Manage incoming messages and user activities
-          </p>
-        </div>
-      </div>
+      <NotificationsHeader totalNotifications={totalNotifications} />
 
       <Tabs defaultValue="messages" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="messages" className="relative">
             Messages
-            {unreadMessagesCount > 0 && (
-              <Badge
-                variant="destructive"
-                className="ml-2 absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-              >
-                {unreadMessagesCount}
-              </Badge>
-            )}
+            <TabNotificationBadge count={unreadMessagesCount} />
           </TabsTrigger>
           <TabsTrigger value="activities" className="relative">
             Activities
-            {unseenActivitiesCount > 0 && (
-              <Badge
-                variant="destructive"
-                className="ml-2 absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-              >
-                {unseenActivitiesCount}
-              </Badge>
-            )}
+            <TabNotificationBadge count={unseenActivitiesCount} />
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="messages">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <div>
-                  <CardTitle>Contact Messages</CardTitle>
-                  <CardDescription>
-                    Messages received from the contact form
-                  </CardDescription>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Bot className="h-4 w-4 mr-1 text-blue-500" />
-                    <span>Auto-responses enabled</span>
-                  </div>
-                  {unreadMessagesCount > 0 && (
-                    <Badge
-                      variant="outline"
-                      className="cursor-pointer hover:bg-secondary"
-                      onClick={markAllMessagesAsRead}
-                    >
-                      Mark all as read
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <MessageList messages={messages} setMessages={setMessages} />
-            </CardContent>
-          </Card>
+          <MessagesTab 
+            messages={messages}
+            setMessages={setMessages}
+            unreadCount={unreadMessagesCount}
+          />
         </TabsContent>
 
         <TabsContent value="activities">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <div>
-                  <CardTitle>User Activities</CardTitle>
-                  <CardDescription>
-                    Recent activities from users across the platform
-                  </CardDescription>
-                </div>
-                {unseenActivitiesCount > 0 && (
-                  <Badge
-                    variant="outline"
-                    className="cursor-pointer hover:bg-secondary"
-                    onClick={markAllActivitiesAsSeen}
-                  >
-                    Mark all as seen
-                  </Badge>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ActivitiesLog activities={activities} setActivities={setActivities} />
-            </CardContent>
-          </Card>
+          <ActivitiesTab
+            activities={activities}
+            setActivities={setActivities}
+            unseenCount={unseenActivitiesCount}
+          />
         </TabsContent>
       </Tabs>
     </div>

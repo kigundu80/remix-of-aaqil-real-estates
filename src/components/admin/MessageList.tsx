@@ -1,4 +1,3 @@
-
 import React from "react";
 import { format } from "date-fns";
 import {
@@ -21,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Mail, MailOpen, ExternalLink, Bot } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import "./messageList.css";
 
 interface Message {
   id: string;
