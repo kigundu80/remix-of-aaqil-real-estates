@@ -1,3 +1,4 @@
+
 import React from "react";
 import { format } from "date-fns";
 import {
@@ -18,8 +19,9 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Mail, MailOpen, ExternalLink, Bot } from "lucide-react";
+import { Mail, MailOpen, ExternalLink, Bot, AlertTriangle, Info, CircleAlert } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { determineMessagePriority, getPriorityStyles } from "@/utils/notificationStyles";
 import "./messageList.css";
 
 interface Message {
@@ -73,6 +75,20 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
     }
   };
 
+  const renderPriorityIcon = (message: Message) => {
+    const priority = determineMessagePriority(message);
+    const { iconColor } = getPriorityStyles(priority);
+    
+    if (priority === 'high') {
+      return <AlertTriangle className={`h-4 w-4 ${iconColor} ml-2`} />;
+    } else if (priority === 'medium') {
+      return <CircleAlert className={`h-4 w-4 ${iconColor} ml-2`} />;
+    } else if (priority === 'info') {
+      return <Info className={`h-4 w-4 ${iconColor} ml-2`} />;
+    }
+    return null;
+  };
+
   return (
     <>
       <div className="rounded-md border">
@@ -95,44 +111,50 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
                 </TableCell>
               </TableRow>
             ) : (
-              messages.map((message) => (
-                <TableRow
-                  key={message.id}
-                  className={`cursor-pointer transition-colors hover:bg-muted/50 ${
-                    !message.read ? "font-medium bg-muted/20" : ""
-                  }`}
-                  onClick={() => handleOpenMessage(message)}
-                >
-                  <TableCell>
-                    {message.read ? (
-                      <MailOpen className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <Mail className="h-4 w-4 text-blue-500" />
-                    )}
-                  </TableCell>
-                  <TableCell>{message.name}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {message.subject}
-                      {!message.read && (
-                        <Badge variant="default" className="ml-2">New</Badge>
+              messages.map((message) => {
+                const priority = determineMessagePriority(message);
+                const { rowClass, badgeClass } = getPriorityStyles(priority);
+                
+                return (
+                  <TableRow
+                    key={message.id}
+                    className={`cursor-pointer transition-colors hover:bg-muted/50 ${
+                      !message.read ? "font-medium bg-muted/20" : ""
+                    } ${rowClass}`}
+                    onClick={() => handleOpenMessage(message)}
+                  >
+                    <TableCell>
+                      {message.read ? (
+                        <MailOpen className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <Mail className="h-4 w-4 text-blue-500" />
                       )}
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">{message.email}</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    {format(new Date(message.date), "PPp")}
-                  </TableCell>
-                  <TableCell>
-                    {message.autoResponse && (
-                      <div className="tooltip-container">
-                        <Bot className="h-4 w-4 text-blue-500" />
-                        <span className="tooltip">Auto-responded</span>
+                    </TableCell>
+                    <TableCell>{message.name}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        {message.subject}
+                        {!message.read && (
+                          <Badge variant="default" className={`ml-2 ${badgeClass}`}>New</Badge>
+                        )}
+                        {renderPriorityIcon(message)}
                       </div>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">{message.email}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {format(new Date(message.date), "PPp")}
+                    </TableCell>
+                    <TableCell>
+                      {message.autoResponse && (
+                        <div className="tooltip-container">
+                          <Bot className="h-4 w-4 text-blue-500" />
+                          <span className="tooltip">Auto-responded</span>
+                        </div>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
@@ -142,7 +164,10 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
         {selectedMessage && (
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
-              <DialogTitle>{selectedMessage.subject}</DialogTitle>
+              <DialogTitle className="flex items-center gap-2">
+                {selectedMessage.subject}
+                {renderPriorityIcon(selectedMessage)}
+              </DialogTitle>
               <DialogDescription className="flex justify-between items-center">
                 <span>From: {selectedMessage.name} ({selectedMessage.email})</span>
                 <span className="text-xs">
@@ -155,12 +180,12 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
             </div>
             
             {selectedMessage.autoResponse && (
-              <div className="bg-blue-50 p-4 rounded-md border border-blue-100 mt-4">
+              <div className="bg-blue-50 p-4 rounded-md border border-blue-100 mt-4 dark:bg-blue-950 dark:border-blue-900">
                 <div className="flex items-center mb-2">
                   <Bot className="h-5 w-5 mr-2 text-blue-500" />
                   <span className="font-medium">Automatic Response:</span>
                 </div>
-                <p className="text-gray-700">{selectedMessage.autoResponse}</p>
+                <p className="text-gray-700 dark:text-gray-300">{selectedMessage.autoResponse}</p>
               </div>
             )}
             
@@ -176,34 +201,6 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
           </DialogContent>
         )}
       </Dialog>
-
-      <style jsx>{`
-        .tooltip-container {
-          position: relative;
-          display: inline-block;
-        }
-        .tooltip {
-          visibility: hidden;
-          width: 120px;
-          background-color: #333;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 5px;
-          position: absolute;
-          z-index: 1;
-          bottom: 125%;
-          left: 50%;
-          transform: translateX(-50%);
-          opacity: 0;
-          transition: opacity 0.3s;
-          font-size: 12px;
-        }
-        .tooltip-container:hover .tooltip {
-          visibility: visible;
-          opacity: 1;
-        }
-      `}</style>
     </>
   );
 };

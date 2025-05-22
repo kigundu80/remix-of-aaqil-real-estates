@@ -26,3 +26,32 @@
   visibility: visible;
   opacity: 1;
 }
+
+/* Priority-based styling */
+.priority-high {
+  border-left: 4px solid rgb(239, 68, 68);
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+.priority-medium {
+  border-left: 4px solid rgb(245, 158, 11);
+  background-color: rgba(245, 158, 11, 0.05);
+}
+
+.priority-info {
+  border-left: 4px solid rgb(59, 130, 246);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.priority-low {
+  border-left: 4px solid rgb(34, 197, 94);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .tooltip {
+    background-color: #222;
+    color: #eee;
+  }
+}
