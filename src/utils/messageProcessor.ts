@@ -1,5 +1,6 @@
 
 import { useToast } from "@/hooks/use-toast";
+import { analyzeSentiment, SentimentType } from "./sentimentAnalyzer";
 
 // List of keywords and their corresponding automated responses
 const autoResponses: Record<string, string> = {
@@ -20,6 +21,10 @@ export interface ProcessedMessage {
   original: string;
   automatic: boolean;
   response: string;
+  sentiment?: {
+    type: SentimentType;
+    confidence: number;
+  };
 }
 
 /**
@@ -30,13 +35,20 @@ export interface ProcessedMessage {
 export const processMessage = (message: string): ProcessedMessage => {
   const lowerCaseMessage = message.toLowerCase();
   
+  // Analyze sentiment
+  const sentimentResult = analyzeSentiment(message);
+  
   // Check if message contains any keywords
   for (const [keyword, response] of Object.entries(autoResponses)) {
     if (lowerCaseMessage.includes(keyword.toLowerCase())) {
       return {
         original: message,
         automatic: true,
-        response
+        response,
+        sentiment: {
+          type: sentimentResult.sentiment,
+          confidence: sentimentResult.confidence
+        }
       };
     }
   }
@@ -45,6 +57,10 @@ export const processMessage = (message: string): ProcessedMessage => {
   return {
     original: message,
     automatic: true,
-    response: defaultResponse
+    response: defaultResponse,
+    sentiment: {
+      type: sentimentResult.sentiment,
+      confidence: sentimentResult.confidence
+    }
   };
 };

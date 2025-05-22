@@ -48,10 +48,52 @@
   background-color: rgba(34, 197, 94, 0.05);
 }
 
+/* Sentiment icons styling */
+.sentiment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  transition: all 0.2s ease;
+}
+
+.sentiment-positive {
+  color: rgb(22, 163, 74);
+  background-color: rgba(22, 163, 74, 0.1);
+}
+
+.sentiment-neutral {
+  color: rgb(59, 130, 246);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.sentiment-negative {
+  color: rgb(220, 38, 38);
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   .tooltip {
     background-color: #222;
     color: #eee;
+  }
+  
+  .sentiment-positive {
+    color: rgb(34, 197, 94);
+    background-color: rgba(34, 197, 94, 0.15);
+  }
+  
+  .sentiment-neutral {
+    color: rgb(96, 165, 250);
+    background-color: rgba(96, 165, 250, 0.15);
+  }
+  
+  .sentiment-negative {
+    color: rgb(239, 68, 68);
+    background-color: rgba(239, 68, 68, 0.15);
   }
 }

@@ -19,9 +19,16 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Mail, MailOpen, ExternalLink, Bot, AlertTriangle, Info, CircleAlert } from "lucide-react";
+import { Mail, MailOpen, ExternalLink, Bot, AlertTriangle, Info, CircleAlert, Smile, Frown, Meh } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { determineMessagePriority, getPriorityStyles } from "@/utils/notificationStyles";
+import { analyzeSentiment, SentimentType } from "@/utils/sentimentAnalyzer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import "./messageList.css";
 
 interface Message {
@@ -89,6 +96,37 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
     return null;
   };
 
+  const renderSentimentIcon = (message: Message) => {
+    const sentimentResult = analyzeSentiment(message.message);
+    
+    let SentimentIcon;
+    switch (sentimentResult.sentiment) {
+      case 'positive':
+        SentimentIcon = Smile;
+        break;
+      case 'negative':
+        SentimentIcon = Frown;
+        break;
+      default:
+        SentimentIcon = Meh;
+    }
+    
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={`sentiment-icon sentiment-${sentimentResult.sentiment}`}>
+              <SentimentIcon className="h-4 w-4" />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{sentimentResult.sentiment.charAt(0).toUpperCase() + sentimentResult.sentiment.slice(1)} tone detected ({Math.round(sentimentResult.confidence * 100)}% confidence)</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  };
+
   return (
     <>
       <div className="rounded-md border">
@@ -101,12 +139,13 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
               <TableHead className="hidden md:table-cell">Email</TableHead>
               <TableHead className="hidden md:table-cell">Date</TableHead>
               <TableHead className="w-[60px]"></TableHead>
+              <TableHead className="w-[40px]">Mood</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {messages.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-6">
+                <TableCell colSpan={7} className="text-center py-6">
                   No messages found
                 </TableCell>
               </TableRow>
@@ -152,6 +191,9 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
                         </div>
                       )}
                     </TableCell>
+                    <TableCell>
+                      {renderSentimentIcon(message)}
+                    </TableCell>
                   </TableRow>
                 );
               })
@@ -188,6 +230,11 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
                 <p className="text-gray-700 dark:text-gray-300">{selectedMessage.autoResponse}</p>
               </div>
             )}
+
+            <div className="flex items-center mt-2">
+              <span className="mr-2 font-medium">Message tone:</span>
+              {renderSentimentIcon(selectedMessage)}
+            </div>
             
             <DialogFooter>
               <Button variant="outline" onClick={handleCloseDialog}>
