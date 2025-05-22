@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import * as React from "react";
 
 type Theme = {
   primary: string;
@@ -27,37 +27,42 @@ type ThemeContextType = {
   resetTheme: () => void;
 };
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
+  const [theme, setThemeState] = React.useState<Theme>(() => {
     // Try to get the theme from local storage
-    const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme ? JSON.parse(savedTheme) : defaultTheme;
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem("app-theme");
+      return savedTheme ? JSON.parse(savedTheme) : defaultTheme;
+    }
+    return defaultTheme;
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Update CSS variables when theme changes
-    Object.entries(theme).forEach(([key, value]) => {
-      if (key === "primary") {
-        document.documentElement.style.setProperty("--primary", extractHsl(value));
-      } else if (key === "secondary") {
-        document.documentElement.style.setProperty("--secondary", extractHsl(value));
-      } else if (key === "accent") {
-        document.documentElement.style.setProperty("--accent", extractHsl(value));
-      } else if (key === "background") {
-        document.documentElement.style.setProperty("--background", extractHsl(value));
-      } else if (key === "foreground") {
-        document.documentElement.style.setProperty("--foreground", extractHsl(value));
-      } else if (key === "card") {
-        document.documentElement.style.setProperty("--card", extractHsl(value));
-      } else if (key === "border") {
-        document.documentElement.style.setProperty("--border", extractHsl(value));
-      }
-    });
+    if (typeof window !== 'undefined') {
+      Object.entries(theme).forEach(([key, value]) => {
+        if (key === "primary") {
+          document.documentElement.style.setProperty("--primary", extractHsl(value));
+        } else if (key === "secondary") {
+          document.documentElement.style.setProperty("--secondary", extractHsl(value));
+        } else if (key === "accent") {
+          document.documentElement.style.setProperty("--accent", extractHsl(value));
+        } else if (key === "background") {
+          document.documentElement.style.setProperty("--background", extractHsl(value));
+        } else if (key === "foreground") {
+          document.documentElement.style.setProperty("--foreground", extractHsl(value));
+        } else if (key === "card") {
+          document.documentElement.style.setProperty("--card", extractHsl(value));
+        } else if (key === "border") {
+          document.documentElement.style.setProperty("--border", extractHsl(value));
+        }
+      });
 
-    // Save theme to local storage
-    localStorage.setItem("app-theme", JSON.stringify(theme));
+      // Save theme to local storage
+      localStorage.setItem("app-theme", JSON.stringify(theme));
+    }
   }, [theme]);
 
   const setTheme = (newTheme: Theme) => {
@@ -66,7 +71,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const resetTheme = () => {
     setThemeState(defaultTheme);
-    localStorage.removeItem("app-theme");
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("app-theme");
+    }
   };
 
   // Helper function to extract HSL values from a string
@@ -93,7 +100,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useTheme = () => {
-  const context = useContext(ThemeContext);
+  const context = React.useContext(ThemeContext);
   if (context === undefined) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
