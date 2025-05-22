@@ -125,7 +125,10 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
                   </TableCell>
                   <TableCell>
                     {message.autoResponse && (
-                      <Bot className="h-4 w-4 text-blue-500" title="Auto-responded" />
+                      <div className="tooltip-container">
+                        <Bot className="h-4 w-4 text-blue-500" />
+                        <span className="tooltip">Auto-responded</span>
+                      </div>
                     )}
                   </TableCell>
                 </TableRow>
@@ -173,6 +176,34 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
           </DialogContent>
         )}
       </Dialog>
+
+      <style jsx>{`
+        .tooltip-container {
+          position: relative;
+          display: inline-block;
+        }
+        .tooltip {
+          visibility: hidden;
+          width: 120px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: opacity 0.3s;
+          font-size: 12px;
+        }
+        .tooltip-container:hover .tooltip {
+          visibility: visible;
+          opacity: 1;
+        }
+      `}</style>
     </>
   );
 };
