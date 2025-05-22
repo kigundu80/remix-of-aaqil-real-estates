@@ -29,10 +29,10 @@ import UserManagementPage from "./components/admin/UserManagementPage";
 import AdminProfilePage from "./components/admin/AdminProfilePage";
 import MessagesPage from "./components/admin/MessagesPage";
 
-const App = () => {
-  // Create a new QueryClient instance inside the function component
-  const queryClient = new QueryClient();
+// Create a new QueryClient instance outside the component to avoid recreation on each render
+const queryClient = new QueryClient();
 
+const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
