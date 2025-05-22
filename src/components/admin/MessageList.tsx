@@ -19,7 +19,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Mail, MailOpen, ExternalLink } from "lucide-react";
+import { Mail, MailOpen, ExternalLink, Bot } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Message {
@@ -30,6 +30,7 @@ interface Message {
   message: string;
   date: string;
   read: boolean;
+  autoResponse?: string;
 }
 
 interface MessageListProps {
@@ -83,12 +84,13 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
               <TableHead>Subject</TableHead>
               <TableHead className="hidden md:table-cell">Email</TableHead>
               <TableHead className="hidden md:table-cell">Date</TableHead>
+              <TableHead className="w-[60px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {messages.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-6">
+                <TableCell colSpan={6} className="text-center py-6">
                   No messages found
                 </TableCell>
               </TableRow>
@@ -121,6 +123,11 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
                   <TableCell className="hidden md:table-cell">
                     {format(new Date(message.date), "PPp")}
                   </TableCell>
+                  <TableCell>
+                    {message.autoResponse && (
+                      <Bot className="h-4 w-4 text-blue-500" title="Auto-responded" />
+                    )}
+                  </TableCell>
                 </TableRow>
               ))
             )}
@@ -143,6 +150,17 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, setMessages 
             <div className="bg-muted/30 p-4 rounded-md max-h-[300px] overflow-y-auto">
               <p className="whitespace-pre-wrap">{selectedMessage.message}</p>
             </div>
+            
+            {selectedMessage.autoResponse && (
+              <div className="bg-blue-50 p-4 rounded-md border border-blue-100 mt-4">
+                <div className="flex items-center mb-2">
+                  <Bot className="h-5 w-5 mr-2 text-blue-500" />
+                  <span className="font-medium">Automatic Response:</span>
+                </div>
+                <p className="text-gray-700">{selectedMessage.autoResponse}</p>
+              </div>
+            )}
+            
             <DialogFooter>
               <Button variant="outline" onClick={handleCloseDialog}>
                 Close

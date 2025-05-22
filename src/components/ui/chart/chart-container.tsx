@@ -4,21 +4,21 @@ import { ResponsiveContainer } from "recharts";
 
 interface ChartContainerProps {
   /**
-   * The aspect ratio of the chart. If not provided, the chart will fill the parent element.
+   * The aspect ratio of the chart. If provided, the chart will maintain this aspect ratio regardless of the container size.
    */
   aspect?: number;
   /**
-   * The width of the chart in pixels or percentage.
+   * The width of the chart. This can be a number (pixels) or a string percentage.
    */
   width?: number | string;
   /**
-   * The height of the chart in pixels.
+   * The height of the chart. This can be a number (pixels) or a string percentage.
    */
   height?: number | string;
   /**
    * The content of the chart.
    */
-  children: React.ReactNode;
+  children: React.ReactElement;
 }
 
 export function ChartContainer({
@@ -29,8 +29,9 @@ export function ChartContainer({
 }: ChartContainerProps) {
   return (
     <ResponsiveContainer width={width} height={height} aspect={aspect}>
-      {/* We ensure children is a valid React element here */}
       {children}
     </ResponsiveContainer>
   );
 }
+
+export default ChartContainer;

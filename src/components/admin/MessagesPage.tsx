@@ -17,7 +17,7 @@ import {
 import { MessageList } from "@/components/admin/MessageList";
 import { ActivitiesLog } from "@/components/admin/ActivitiesLog";
 import { Badge } from "@/components/ui/badge";
-import { Bell } from "lucide-react";
+import { Bell, Bot } from "lucide-react";
 
 // Mock data for demonstration
 const mockMessages = [
@@ -29,6 +29,7 @@ const mockMessages = [
     message: "I'm interested in the property at Kampala Road. Is it still available?",
     date: "2025-04-13T10:30:00",
     read: false,
+    autoResponse: "Thank you for your interest in our properties! We offer various residential and commercial properties across Uganda. Our team will contact you shortly with more information.",
   },
   {
     id: "2",
@@ -38,6 +39,7 @@ const mockMessages = [
     message: "I would like to request a valuation for my property in Entebbe.",
     date: "2025-04-12T16:45:00",
     read: true,
+    autoResponse: "Thank you for your message! Our team will get back to you shortly.",
   },
   {
     id: "3",
@@ -47,6 +49,7 @@ const mockMessages = [
     message: "I need advice regarding property ownership transfer procedures.",
     date: "2025-04-11T09:15:00",
     read: false,
+    autoResponse: "Thank you for your message! Our team will get back to you shortly.",
   },
 ];
 
@@ -90,6 +93,15 @@ const mockActivities = [
     details: "New user registration",
     timestamp: "2025-04-11T16:20:00",
     seen: true,
+  },
+  {
+    id: "5",
+    type: "chatbot_response",
+    user: "System",
+    action: "Automatic reply",
+    details: "Auto-replied to John Doe's property inquiry",
+    timestamp: "2025-04-13T10:30:05",
+    seen: false,
   },
 ];
 
@@ -172,15 +184,21 @@ const MessagesPage: React.FC = () => {
                     Messages received from the contact form
                   </CardDescription>
                 </div>
-                {unreadMessagesCount > 0 && (
-                  <Badge
-                    variant="outline"
-                    className="cursor-pointer hover:bg-secondary"
-                    onClick={markAllMessagesAsRead}
-                  >
-                    Mark all as read
-                  </Badge>
-                )}
+                <div className="flex items-center space-x-2">
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Bot className="h-4 w-4 mr-1 text-blue-500" />
+                    <span>Auto-responses enabled</span>
+                  </div>
+                  {unreadMessagesCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="cursor-pointer hover:bg-secondary"
+                      onClick={markAllMessagesAsRead}
+                    >
+                      Mark all as read
+                    </Badge>
+                  )}
+                </div>
               </div>
             </CardHeader>
             <CardContent>

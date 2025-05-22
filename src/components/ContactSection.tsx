@@ -2,9 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Bot } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { processMessage } from "@/utils/messageProcessor";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -15,14 +16,26 @@ const ContactSection = () => {
     subject: "",
     message: ""
   });
+  const [showBotResponse, setShowBotResponse] = useState(false);
+  const [botResponse, setBotResponse] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
+    
+    // Reset bot response when user types a new message
+    if (id === "message" && showBotResponse) {
+      setShowBotResponse(false);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Process the message to get an automated response
+    const processed = processMessage(formData.message);
+    setBotResponse(processed.response);
+    setShowBotResponse(true);
     
     // Construct mailto URL with form data
     const subject = encodeURIComponent(formData.subject);
@@ -131,6 +144,16 @@ const ContactSection = () => {
                 />
               </div>
 
+              {showBotResponse && (
+                <div className="mb-4 bg-blue-50 p-4 rounded-md border border-blue-100">
+                  <div className="flex items-center mb-2">
+                    <Bot className="h-5 w-5 mr-2 text-blue-500" />
+                    <span className="font-medium">Automatic Response:</span>
+                  </div>
+                  <p className="text-gray-700">{botResponse}</p>
+                </div>
+              )}
+
               <Button type="submit" className="w-full">
                 Send Message
               </Button>
@@ -161,7 +184,7 @@ const ContactSection = () => {
                   <div>
                     <p className="font-semibold">Email</p>
                     <p><a href="mailto:karmaramak@gmail.com" className="hover:underline">karmaramak@gmail.com</a></p>
-                    <p><a href="mailto:karmaramak@gmail.com" className="hover:underline">sales@hmproperty.com</a></p>
+                    <p><a href="mailto:karmaramak@gmail.com" className="hover:underline">sales@kagwarealestate.com</a></p>
                   </div>
                 </div>
                 <div className="flex items-start">
