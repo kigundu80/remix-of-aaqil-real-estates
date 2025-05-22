@@ -264,7 +264,7 @@ const PropertiesPage = () => {
                 
                 <div>
                   <div className="flex justify-between mb-1">
-                    <Label>Price Range (USh)</Label>
+                    <Label>Price Range (UGX)</Label>
                     <span className="text-sm text-gray-500">
                       {priceRange[0].toLocaleString()} - {priceRange[1].toLocaleString()}
                     </span>
