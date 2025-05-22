@@ -21,6 +21,7 @@ import LandSellingPage from "./pages/LandSellingPage";
 import PropertyValuationPage from "./pages/PropertyValuationPage";
 import LegalConsultationPage from "./pages/LegalConsultationPage";
 import AdminPage from "./pages/AdminPage";
+import VIPAdminPage from "./pages/VIPAdminPage";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import PropertyManagementPage from "./components/admin/PropertyManagementPage";
 import AddPropertyPage from "./components/admin/AddPropertyPage";
@@ -29,10 +30,10 @@ import UserManagementPage from "./components/admin/UserManagementPage";
 import AdminProfilePage from "./components/admin/AdminProfilePage";
 import MessagesPage from "./components/admin/MessagesPage";
 
-// Create a new QueryClient instance outside the component to avoid recreation on each render
-const queryClient = new QueryClient();
-
 const App = () => {
+  // Create a new QueryClient instance inside the function component
+  const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
@@ -54,6 +55,7 @@ const App = () => {
               <Route path="/land-selling" element={<LandSellingPage />} />
               <Route path="/property-valuation" element={<PropertyValuationPage />} />
               <Route path="/legal-consultation" element={<LegalConsultationPage />} />
+              <Route path="/vip-admin" element={<VIPAdminPage />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminPage />}>

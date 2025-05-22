@@ -32,7 +32,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : ''}`}>
+          <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : 'bg-background'}`}>
             <img 
               src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
               alt="HM Property Consultants Logo" 
@@ -50,7 +50,7 @@ const Navbar = () => {
             <Link
               key={link.title}
               to={link.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-hm-green"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
             >
               {link.title}
             </Link>
@@ -58,7 +58,7 @@ const Navbar = () => {
           
           {/* Services Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-sm font-medium text-foreground/80 transition-colors hover:text-hm-green flex items-center gap-1">
+            <DropdownMenuTrigger className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary flex items-center gap-1">
               Services <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -93,7 +93,7 @@ const Navbar = () => {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex items-center justify-between mb-6">
                 <Link to="/" className="flex items-center">
-                  <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : ''}`}>
+                  <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : 'bg-background'}`}>
                     <img 
                       src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
                       alt="HM Property Consultants Logo" 
@@ -111,7 +111,7 @@ const Navbar = () => {
                   <Link
                     key={link.title}
                     to={link.href}
-                    className="text-lg font-medium text-foreground/80 transition-colors hover:text-hm-green"
+                    className="text-lg font-medium text-foreground/80 transition-colors hover:text-primary"
                   >
                     {link.title}
                   </Link>
@@ -125,7 +125,7 @@ const Navbar = () => {
                       <Link
                         key={service.title}
                         to={service.href}
-                        className="text-sm font-medium text-foreground/80 transition-colors hover:text-hm-green"
+                        className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
                       >
                         {service.title}
                       </Link>
