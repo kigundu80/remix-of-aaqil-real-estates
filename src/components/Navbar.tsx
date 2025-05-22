@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -35,12 +36,12 @@ const Navbar = () => {
           <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : 'bg-background'}`}>
             <img 
               src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
-              alt="HM Property Consultants Logo" 
+              alt="KAGGWA REAL ESTATES Logo" 
               className="h-12 w-auto" 
             />
           </div>
           <span className="hidden sm:inline-block text-lg font-semibold text-foreground">
-            HM PROPERTY CONSULTANTS
+            KAGGWA REAL ESTATES
           </span>
         </Link>
 
@@ -96,12 +97,12 @@ const Navbar = () => {
                   <div className={`p-1 rounded ${isDarkMode ? 'bg-white/10' : 'bg-background'}`}>
                     <img 
                       src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
-                      alt="HM Property Consultants Logo" 
+                      alt="KAGGWA REAL ESTATES Logo" 
                       className="h-10 w-auto" 
                     />
                   </div>
                   <span className="inline-block mt-1 font-semibold text-foreground">
-                    HM PROPERTY CONSULTANTS
+                    KAGGWA REAL ESTATES
                   </span>
                 </Link>
                 <ThemeToggle />

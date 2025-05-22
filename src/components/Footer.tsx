@@ -15,12 +15,12 @@ const Footer = () => {
               <div className={`p-2 rounded ${isDarkMode ? 'bg-white/10' : 'bg-background'}`}>
                 <img 
                   src="/lovable-uploads/b4f632ed-048f-43a5-a317-0f23e3ec897f.png" 
-                  alt="HM Property Consultants Logo" 
+                  alt="KAGGWA REAL ESTATES Logo" 
                   className="h-16 w-auto" 
                 />
               </div>
               <span className="text-xl font-bold mt-3 tracking-tighter text-primary-foreground">
-                HM PROPERTY CONSULTANTS
+                KAGGWA REAL ESTATES
               </span>
             </Link>
             <p className="text-sm text-primary-foreground/80 mb-4">
@@ -113,8 +113,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 mr-2 flex-shrink-0" />
-                <a href="mailto:info@hmproperty.com" className="hover:text-accent">
-                  info@hmproperty.com
+                <a href="mailto:info@kaggwarealestate.com" className="hover:text-accent">
+                  info@kaggwarealestate.com
                 </a>
               </li>
             </ul>
@@ -125,7 +125,7 @@ const Footer = () => {
           <div className="flex items-center">
             <Copyright className="h-4 w-4 mr-1" />
             <p className="text-sm text-primary-foreground/80">
-              {new Date().getFullYear()} HM PROPERTY CONSULTANTS. All rights reserved. 
+              {new Date().getFullYear()} KAGGWA REAL ESTATES. All rights reserved. 
               <span className="ml-2 font-medium">Created by Karma Aaqil Akram Kiggundu</span>
             </p>
           </div>

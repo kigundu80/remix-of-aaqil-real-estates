@@ -1,40 +1,46 @@
 
-import * as React from "react";
-import * as RechartsPrimitive from "recharts";
-import { cn } from "@/lib/utils";
-import { ChartContext } from "./chart-context";
-import { ChartStyle } from "./chart-style";
-import { ChartContainerProps } from "./types";
+import React from "react";
+import { ResponsiveContainer } from "recharts";
+import { ChartContextProvider } from "./chart-context";
+import { getTheme } from "./chart-style";
+import type { ChartTheme } from "./types";
 
-const ChartContainer = React.forwardRef<HTMLDivElement, ChartContainerProps>(
-  ({ id, className, children, config, ...props }, ref) => {
-    const uniqueId = React.useId();
-    const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
+interface ChartContainerProps {
+  /**
+   * The aspect ratio of the chart. If not provided, the chart will fill the parent element.
+   */
+  aspect?: number;
+  /**
+   * The width of the chart in pixels or percentage.
+   */
+  width?: number | string;
+  /**
+   * The height of the chart in pixels.
+   */
+  height?: number | string;
+  /**
+   * The theme of the chart. If not provided, the theme will be determined by the current theme.
+   */
+  theme?: ChartTheme;
+  /**
+   * The content of the chart.
+   */
+  children: React.ReactNode;
+}
 
-    // Ensure we're passing a ReactElement, not just a ReactNode
-    const onlyChild = React.Children.only(children) as React.ReactElement;
-
-    return (
-      <ChartContext.Provider value={{ config }}>
-        <div
-          data-chart={chartId}
-          ref={ref}
-          className={cn(
-            "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
-            className
-          )}
-          {...props}
-        >
-          <ChartStyle id={chartId} config={config} />
-          <RechartsPrimitive.ResponsiveContainer>
-            {onlyChild}
-          </RechartsPrimitive.ResponsiveContainer>
-        </div>
-      </ChartContext.Provider>
-    );
-  }
-);
-
-ChartContainer.displayName = "Chart";
-
-export { ChartContainer };
+export function ChartContainer({
+  aspect,
+  width = "100%",
+  height = 350,
+  theme,
+  children,
+}: ChartContainerProps) {
+  return (
+    <ChartContextProvider theme={theme ?? getTheme()}>
+      <ResponsiveContainer width={width} height={height} aspect={aspect}>
+        {/* Removing React.Children.only to fix the type error */}
+        {children}
+      </ResponsiveContainer>
+    </ChartContextProvider>
+  );
+}
