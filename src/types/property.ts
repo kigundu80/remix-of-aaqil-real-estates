@@ -1,18 +1,46 @@
 
+export type PropertyCategory = 'land' | 'house' | 'vehicle' | 'furniture';
+export type PropertyStatus = 'available' | 'sold' | 'pending';
+
 export type PropertyType = {
   id: string;
+  category: PropertyCategory;
   title: string;
-  description: string;
+  description: string | null;
   price: number;
-  location: string;
-  size: string;
-  bedrooms: number;
-  bathrooms: number;
+  location: string | null;
+  status: PropertyStatus;
+  featured: boolean;
   images: string[];
   features: string[];
-  status: 'available' | 'sold' | 'pending';
-  type: string;
-  createdAt: string;
+  
+  // House/Land specific
+  size?: string | null;
+  bedrooms?: number | null;
+  bathrooms?: number | null;
+  land_size?: string | null;
+  year_built?: number | null;
+  parking_spaces?: number | null;
+  
+  // Vehicle specific
+  make?: string | null;
+  model?: string | null;
+  year?: number | null;
+  mileage?: number | null;
+  fuel_type?: string | null;
+  transmission?: string | null;
+  color?: string | null;
+  engine_size?: string | null;
+  
+  // Furniture specific
+  material?: string | null;
+  dimensions?: string | null;
+  condition?: string | null;
+  brand?: string | null;
+  
+  created_at: string;
+  updated_at: string;
+  created_by?: string | null;
 };
 
 export type ExtendedPropertyType = {
@@ -46,64 +74,98 @@ export type ExtendedPropertyType = {
 };
 
 export interface PropertyFormValues {
+  category: PropertyCategory;
   title: string;
   description: string;
   price: string;
   location: string;
-  size: string;
-  bedrooms: number;
-  bathrooms: number;
+  status: PropertyStatus;
+  featured: boolean;
   features: string;
-  status: string;
-  type: string;
+  
+  // House/Land specific
+  size?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  land_size?: string;
+  year_built?: number;
+  parking_spaces?: number;
+  
+  // Vehicle specific
+  make?: string;
+  model?: string;
+  year?: number;
+  mileage?: number;
+  fuel_type?: string;
+  transmission?: string;
+  color?: string;
+  engine_size?: string;
+  
+  // Furniture specific
+  material?: string;
+  dimensions?: string;
+  condition?: string;
+  brand?: string;
+  
   images?: FileList;
 }
 
-// Fix for PropertyManagementTable properties
+// Mock properties for backwards compatibility
 export const mockProperties: PropertyType[] = [
   {
     id: "1",
+    category: "house",
     title: "Modern Luxury Villa",
     description: "Beautiful modern villa with stunning views",
-    price: 750000,
-    location: "123 Main St, Anytown",
+    price: 750000000,
+    location: "Kololo, Kampala",
+    status: "available",
+    featured: true,
+    images: ["/placeholder.svg"],
+    features: ["Pool", "Garden", "Garage"],
     size: "2500 sq ft",
     bedrooms: 4,
     bathrooms: 3,
-    images: ["/placeholder.svg"],
-    features: ["Pool", "Garden", "Garage"],
-    status: "available",
-    type: "villa",
-    createdAt: "2023-01-15T10:30:00Z",
+    created_at: "2023-01-15T10:30:00Z",
+    updated_at: "2023-01-15T10:30:00Z",
   },
   {
-    id: "2", 
-    title: "Downtown Apartment",
-    description: "Modern apartment in the heart of downtown",
-    price: 350000,
-    location: "456 Center Ave, Downtown",
-    size: "1200 sq ft",
-    bedrooms: 2,
-    bathrooms: 2,
+    id: "2",
+    category: "vehicle", 
+    title: "Toyota Land Cruiser V8",
+    description: "Well-maintained SUV perfect for Ugandan roads",
+    price: 180000000,
+    location: "Kampala",
+    status: "available",
+    featured: true,
     images: ["/placeholder.svg"],
-    features: ["Balcony", "Gym", "Security"],
-    status: "pending",
-    type: "apartment",
-    createdAt: "2023-02-05T14:45:00Z",
+    features: ["Leather Interior", "Sunroof", "Navigation"],
+    make: "Toyota",
+    model: "Land Cruiser V8",
+    year: 2020,
+    mileage: 45000,
+    fuel_type: "Diesel",
+    transmission: "Automatic",
+    color: "White",
+    created_at: "2023-02-05T14:45:00Z",
+    updated_at: "2023-02-05T14:45:00Z",
   },
   {
     id: "3",
-    title: "Family House with Garden",
-    description: "Spacious family house with beautiful garden",
-    price: 550000,
-    location: "789 Oak St, Suburbia",
-    size: "1800 sq ft",
-    bedrooms: 3,
-    bathrooms: 2,
+    category: "furniture",
+    title: "Executive Office Desk",
+    description: "Premium mahogany executive desk with drawers",
+    price: 2500000,
+    location: "Kampala",
+    status: "available",
+    featured: false,
     images: ["/placeholder.svg"],
-    features: ["Garden", "Garage", "Fireplace"],
-    status: "sold",
-    type: "house",
-    createdAt: "2023-03-10T09:15:00Z",
+    features: ["Drawers", "Cable Management", "Lockable"],
+    material: "Mahogany Wood",
+    dimensions: "180cm x 90cm x 75cm",
+    condition: "New",
+    brand: "Custom Made",
+    created_at: "2023-03-10T09:15:00Z",
+    updated_at: "2023-03-10T09:15:00Z",
   }
 ];

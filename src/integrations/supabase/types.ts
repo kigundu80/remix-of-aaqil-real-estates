@@ -14,7 +14,108 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      properties: {
+        Row: {
+          bathrooms: number | null
+          bedrooms: number | null
+          brand: string | null
+          category: Database["public"]["Enums"]["property_category"]
+          color: string | null
+          condition: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          dimensions: string | null
+          engine_size: string | null
+          featured: boolean | null
+          features: string[] | null
+          fuel_type: string | null
+          id: string
+          images: string[] | null
+          land_size: string | null
+          location: string | null
+          make: string | null
+          material: string | null
+          mileage: number | null
+          model: string | null
+          parking_spaces: number | null
+          price: number
+          size: string | null
+          status: Database["public"]["Enums"]["property_status"]
+          title: string
+          transmission: string | null
+          updated_at: string
+          year: number | null
+          year_built: number | null
+        }
+        Insert: {
+          bathrooms?: number | null
+          bedrooms?: number | null
+          brand?: string | null
+          category: Database["public"]["Enums"]["property_category"]
+          color?: string | null
+          condition?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          dimensions?: string | null
+          engine_size?: string | null
+          featured?: boolean | null
+          features?: string[] | null
+          fuel_type?: string | null
+          id?: string
+          images?: string[] | null
+          land_size?: string | null
+          location?: string | null
+          make?: string | null
+          material?: string | null
+          mileage?: number | null
+          model?: string | null
+          parking_spaces?: number | null
+          price: number
+          size?: string | null
+          status?: Database["public"]["Enums"]["property_status"]
+          title: string
+          transmission?: string | null
+          updated_at?: string
+          year?: number | null
+          year_built?: number | null
+        }
+        Update: {
+          bathrooms?: number | null
+          bedrooms?: number | null
+          brand?: string | null
+          category?: Database["public"]["Enums"]["property_category"]
+          color?: string | null
+          condition?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          dimensions?: string | null
+          engine_size?: string | null
+          featured?: boolean | null
+          features?: string[] | null
+          fuel_type?: string | null
+          id?: string
+          images?: string[] | null
+          land_size?: string | null
+          location?: string | null
+          make?: string | null
+          material?: string | null
+          mileage?: number | null
+          model?: string | null
+          parking_spaces?: number | null
+          price?: number
+          size?: string | null
+          status?: Database["public"]["Enums"]["property_status"]
+          title?: string
+          transmission?: string | null
+          updated_at?: string
+          year?: number | null
+          year_built?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +124,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      property_category: "land" | "house" | "vehicle" | "furniture"
+      property_status: "available" | "sold" | "pending"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +252,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      property_category: ["land", "house", "vehicle", "furniture"],
+      property_status: ["available", "sold", "pending"],
+    },
   },
 } as const

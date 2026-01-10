@@ -1,112 +1,62 @@
 
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { PropertyForm } from "./property-form";
+import { PropertyFormValues } from "@/types/property";
+import { useProperty, useUpdateProperty } from "@/hooks/useProperties";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import { PropertyForm } from "./property-form";
-import { useToast } from "@/hooks/use-toast";
-import { PropertyType, PropertyFormValues } from "@/types/property";
 
 const EditPropertyPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [property, setProperty] = useState<PropertyType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Demo data for properties
-  const demoProperties: PropertyType[] = [
-    {
-      id: "1",
-      title: "Modern Villa",
-      description: "Beautiful modern villa with stunning views",
-      price: 750000,
-      location: "123 Main St, Anytown",
-      size: "2500 sq ft",
-      bedrooms: 4,
-      bathrooms: 3,
-      images: ["/placeholder.svg"],
-      features: ["Swimming Pool", "Garden", "Garage"],
-      status: "available",
-      type: "villa",
-      createdAt: "2023-01-15",
-    },
-    {
-      id: "2",
-      title: "Downtown Apartment",
-      description: "Modern apartment in the heart of downtown",
-      price: 350000,
-      location: "456 Center Ave, Downtown",
-      size: "1200 sq ft",
-      bedrooms: 2,
-      bathrooms: 2,
-      images: ["/placeholder.svg"],
-      features: ["Balcony", "Gym", "Security"],
-      status: "pending",
-      type: "apartment",
-      createdAt: "2023-02-05",
-    },
-  ];
-
-  useEffect(() => {
-    // Simulate API call to fetch property
-    const fetchProperty = () => {
-      setIsLoading(true);
-      
-      // Find property by id in demo data
-      setTimeout(() => {
-        const foundProperty = demoProperties.find(p => p.id === id);
-        
-        if (foundProperty) {
-          setProperty(foundProperty);
-        } else {
-          toast({
-            title: "Property not found",
-            description: "The requested property could not be found.",
-            variant: "destructive",
-          });
-          navigate("/admin/properties");
-        }
-        
-        setIsLoading(false);
-      }, 1000);
-    };
-
-    fetchProperty();
-  }, [id, navigate, toast]);
+  const { data: property, isLoading: isFetching } = useProperty(id || "");
+  const updateProperty = useUpdateProperty();
 
   const handleSubmit = (formData: PropertyFormValues) => {
-    // Simulate API call to update property
-    setIsLoading(true);
+    if (!id) return;
     
-    // Convert string price to number for storing in PropertyType
-    const updatedProperty: Partial<PropertyType> = {
-      ...property,
-      title: formData.title,
-      description: formData.description,
-      price: parseFloat(formData.price),
-      location: formData.location,
-      size: formData.size,
-      bedrooms: formData.bedrooms,
-      bathrooms: formData.bathrooms,
-      status: formData.status as 'available' | 'sold' | 'pending',
-      type: formData.type,
-      features: typeof formData.features === 'string' ? 
-        formData.features.split(',').map(item => item.trim()) : 
-        []
-    };
-    
-    setTimeout(() => {
-      toast({
-        title: "Property updated",
-        description: "The property has been updated successfully.",
-      });
-      
-      setIsLoading(false);
-      navigate("/admin/properties");
-    }, 1000);
+    updateProperty.mutate(
+      { id, formData },
+      {
+        onSuccess: () => {
+          navigate("/admin/properties");
+        },
+      }
+    );
   };
+
+  const initialValues: Partial<PropertyFormValues> | undefined = property
+    ? {
+        category: property.category,
+        title: property.title,
+        description: property.description || "",
+        price: property.price.toString(),
+        location: property.location || "",
+        status: property.status,
+        featured: property.featured,
+        features: property.features?.join(", ") || "",
+        size: property.size || "",
+        bedrooms: property.bedrooms || 0,
+        bathrooms: property.bathrooms || 0,
+        year_built: property.year_built || undefined,
+        parking_spaces: property.parking_spaces || undefined,
+        land_size: property.land_size || "",
+        make: property.make || "",
+        model: property.model || "",
+        year: property.year || undefined,
+        mileage: property.mileage || undefined,
+        fuel_type: property.fuel_type || "",
+        transmission: property.transmission || "",
+        color: property.color || "",
+        engine_size: property.engine_size || "",
+        material: property.material || "",
+        dimensions: property.dimensions || "",
+        condition: property.condition || "",
+        brand: property.brand || "",
+      }
+    : undefined;
 
   return (
     <div className="space-y-6">
@@ -120,26 +70,15 @@ const EditPropertyPage: React.FC = () => {
 
       <Card>
         <CardContent className="pt-6">
-          {isLoading ? (
+          {isFetching ? (
             <div className="flex justify-center py-10">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
           ) : property ? (
             <PropertyForm 
-              initialValues={{
-                title: property.title,
-                description: property.description,
-                price: property.price.toString(), 
-                location: property.location,
-                size: property.size,
-                bedrooms: property.bedrooms,
-                bathrooms: property.bathrooms,
-                features: property.features.join(", "),
-                status: property.status,
-                type: property.type,
-              }} 
+              initialValues={initialValues} 
               onSubmit={handleSubmit} 
-              isLoading={isLoading}
+              isLoading={updateProperty.isPending}
             />
           ) : (
             <p className="text-center py-10 text-muted-foreground">Property not found</p>

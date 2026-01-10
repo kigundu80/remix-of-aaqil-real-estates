@@ -16,16 +16,17 @@ interface PropertyFormProps {
 
 const PropertyForm: React.FC<PropertyFormProps> = ({ initialValues, onSubmit, isLoading = false }) => {
   const defaultValues: Partial<PropertyFormValues> = {
+    category: "house",
     title: "",
     description: "",
     price: "",
     location: "",
+    status: "available",
+    featured: false,
+    features: "",
     size: "",
     bedrooms: 0,
     bathrooms: 0,
-    features: "",
-    status: "available",
-    type: "house",
     ...initialValues
   };
 
