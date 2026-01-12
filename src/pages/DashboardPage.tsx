@@ -12,30 +12,41 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { HeartIcon, GridIcon, UserIcon, ImageIcon, LogOutIcon } from "lucide-react";
 import ImageUploader from "@/components/ImageUploader";
-import PropertyCard, { PropertyType } from "@/components/PropertyCard";
+import PropertyCard from "@/components/PropertyCard";
+import { PropertyType } from "@/types/property";
 import { useToast } from "@/hooks/use-toast";
 
 // Sample saved properties - would come from an API in a real app
 const savedProperties: PropertyType[] = [
   {
     id: "2",
+    category: "land",
     title: "Commercial Plot in Entebbe",
+    description: "Prime commercial plot in Entebbe",
     location: "Entebbe, Uganda",
     price: 350000000,
     size: "1.2 Acres",
-    imageUrl: "https://images.unsplash.com/photo-1592595896616-c37162298647?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
+    images: ["https://images.unsplash.com/photo-1592595896616-c37162298647?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"],
+    features: [],
     featured: true,
-    status: 'For Sale'
+    status: 'available',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
   {
     id: "4",
+    category: "land",
     title: "Waterfront Land in Mukono",
+    description: "Beautiful waterfront property",
     location: "Mukono, Uganda",
     price: 280000000,
     size: "0.8 Acres",
-    imageUrl: "https://images.unsplash.com/photo-1575997759258-91792eaaf87b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bGFrZSUyMGxhbmR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
+    images: ["https://images.unsplash.com/photo-1575997759258-91792eaaf87b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bGFrZSUyMGxhbmR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"],
+    features: [],
     featured: true,
-    status: 'Pending'
+    status: 'pending',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   }
 ];
 

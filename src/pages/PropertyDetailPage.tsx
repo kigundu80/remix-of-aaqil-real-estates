@@ -1,96 +1,75 @@
 
-import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { detailedProperties } from "@/components/PropertyDetail/PropertyDetailData";
 import PropertyImageCarousel from "@/components/PropertyDetail/PropertyImageCarousel";
-import PropertyHeader from "@/components/PropertyDetail/PropertyHeader";
-import PropertyDescription from "@/components/PropertyDetail/PropertyDescription";
-import PropertyLocation from "@/components/PropertyDetail/PropertyLocation";
-import PropertySidebar from "@/components/PropertyDetail/PropertySidebar";
-import PropertyActions from "@/components/PropertyDetail/PropertyActions";
+import PropertyDetailHeader from "@/components/PropertyDetail/PropertyDetailHeader";
+import CategorySpecs from "@/components/PropertyDetail/CategorySpecs";
+import PropertyFeatures from "@/components/PropertyDetail/PropertyFeatures";
+import PropertyDetailSidebar from "@/components/PropertyDetail/PropertyDetailSidebar";
 import PropertyDetailLoading from "@/components/PropertyDetail/PropertyDetailLoading";
 import PropertyNotFound from "@/components/PropertyDetail/PropertyNotFound";
-import { ExtendedPropertyType } from "@/types/property";
+import { usePropertyDetail } from "@/hooks/usePropertyDetail";
+import { ChevronRight } from "lucide-react";
 
 const PropertyDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [property, setProperty] = useState<ExtendedPropertyType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(() => {
-    setIsLoading(true);
-    
-    setTimeout(() => {
-      const foundProperty = detailedProperties.find(p => p.id === id);
-      setProperty(foundProperty || null);
-      setIsLoading(false);
-    }, 500);
-  }, [id]);
+  const { property, isLoading, error } = usePropertyDetail(id);
   
   if (isLoading) {
     return <PropertyDetailLoading />;
   }
 
-  if (!property) {
+  if (!property || error) {
     return <PropertyNotFound />;
   }
 
-  const imageList = [property.imageUrl, ...(property.additionalImages || [])];
+  const images = property.images.length > 0 ? property.images : ["/placeholder.svg"];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
       <main className="flex-grow">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <Link to="/" className="hover:text-hm-green">Home</Link>
-            <span>/</span>
-            <Link to="/properties" className="hover:text-hm-green">Properties</Link>
-            <span>/</span>
-            <span className="text-gray-700">{property.title}</span>
-          </div>
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-1 text-sm text-muted-foreground mb-6">
+            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight className="h-4 w-4" />
+            <Link to="/properties" className="hover:text-primary transition-colors">Properties</Link>
+            <ChevronRight className="h-4 w-4" />
+            <span className="text-foreground font-medium truncate max-w-[200px]">{property.title}</span>
+          </nav>
 
-          <PropertyImageCarousel images={imageList} title={property.title} />
+          {/* Image Carousel */}
+          <PropertyImageCarousel images={images} title={property.title} />
 
-          <PropertyHeader 
-            title={property.title}
-            location={property.location}
-            status={property.status}
-            featured={property.featured}
-            price={property.price}
-            size={property.size}
-          />
+          {/* Header */}
+          <PropertyDetailHeader property={property} />
 
+          {/* Main Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <PropertyDescription 
-                description={property.description}
-                features={property.features}
-                amenities={property.amenities}
-              />
+            <div className="lg:col-span-2 space-y-6">
+              {/* Category-specific specifications */}
+              <CategorySpecs property={property} />
               
-              <PropertyLocation 
-                latitude={property.latitude}
-                longitude={property.longitude}
-              />
+              {/* Description */}
+              {property.description && (
+                <div className="bg-card rounded-xl shadow-sm border p-6">
+                  <h2 className="text-xl font-semibold mb-4">Description</h2>
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                    {property.description}
+                  </p>
+                </div>
+              )}
+              
+              {/* Features */}
+              <PropertyFeatures features={property.features} />
             </div>
             
+            {/* Sidebar */}
             <div className="lg:col-span-1">
-              <PropertySidebar 
-                listedDate={property.listedDate}
-                price={property.price}
-                size={property.size}
-                agentName={property.agentName}
-                agentPhone={property.agentPhone}
-                agentEmail={property.agentEmail}
-                propertyId={property.id}
-                status={property.status}
-              />
-              
-              <PropertyActions />
+              <PropertyDetailSidebar property={property} />
             </div>
           </div>
         </div>

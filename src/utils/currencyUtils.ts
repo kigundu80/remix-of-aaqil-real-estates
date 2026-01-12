@@ -37,4 +37,14 @@ export const formatCurrencyValue = (btcValue: number, targetCurrency: string): s
   }
 };
 
+/**
+ * Formats a UGX value to a readable currency string
+ * 
+ * @param value - The UGX value to format
+ * @returns Formatted currency string with UGX prefix
+ */
+export const formatCurrency = (value: number): string => {
+  return `UGX ${value.toLocaleString()}`;
+};
+
 export { currencySymbols, conversionRates };
