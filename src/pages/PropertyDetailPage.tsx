@@ -11,6 +11,7 @@ import PropertyDetailLoading from "@/components/PropertyDetail/PropertyDetailLoa
 import PropertyNotFound from "@/components/PropertyDetail/PropertyNotFound";
 import { usePropertyDetail } from "@/hooks/usePropertyDetail";
 import { ChevronRight } from "lucide-react";
+import { getPropertyImage } from "@/assets/properties";
 
 const PropertyDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,7 +25,9 @@ const PropertyDetailPage = () => {
     return <PropertyNotFound />;
   }
 
-  const images = property.images.length > 0 ? property.images : ["/placeholder.svg"];
+  const images = property.images.length > 0 
+    ? property.images 
+    : [getPropertyImage(property.id, property.category)];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

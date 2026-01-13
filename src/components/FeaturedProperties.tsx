@@ -15,8 +15,9 @@ const FeaturedProperties = () => {
     const fetchFeaturedProperties = async () => {
       setIsLoading(true);
       try {
+        // Use the public view which hides created_by for security
         const { data, error } = await supabase
-          .from('properties')
+          .from('properties_public')
           .select('*')
           .eq('featured', true)
           .limit(3);
@@ -54,7 +55,8 @@ const FeaturedProperties = () => {
           brand: item.brand,
           created_at: item.created_at,
           updated_at: item.updated_at,
-          created_by: item.created_by,
+          // created_by is not exposed in public view for security
+          created_by: undefined,
         }));
 
         setProperties(formattedProperties);

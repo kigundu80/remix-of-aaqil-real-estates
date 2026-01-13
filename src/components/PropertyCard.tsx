@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PropertyType, PropertyCategory } from "@/types/property";
 import { formatCurrency } from "@/utils/currencyUtils";
+import { getPropertyImage } from "@/assets/properties";
 
 interface PropertyCardProps {
   property: PropertyType;
@@ -66,7 +67,8 @@ const getSecondaryInfo = (property: PropertyType) => {
 };
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
-  const imageUrl = property.images?.[0] || "/placeholder.svg";
+  // Use property images from database, or fall back to generated images
+  const imageUrl = property.images?.[0] || getPropertyImage(property.id, property.category);
   const secondaryInfo = getSecondaryInfo(property);
 
   return (
