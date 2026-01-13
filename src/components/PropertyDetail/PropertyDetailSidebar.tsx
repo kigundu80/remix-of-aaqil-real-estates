@@ -1,10 +1,11 @@
 
 import { PropertyType } from "@/types/property";
-import { Calendar, Phone, Mail, User, Share2, Heart } from "lucide-react";
+import { Calendar, Phone, Mail, Share2, Heart, CreditCard, Building2, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { formatCurrency } from "@/utils/currencyUtils";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 interface PropertyDetailSidebarProps {
   property: PropertyType;
@@ -12,6 +13,7 @@ interface PropertyDetailSidebarProps {
 
 const PropertyDetailSidebar = ({ property }: PropertyDetailSidebarProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleContactAgent = () => {
     toast({
@@ -35,8 +37,13 @@ const PropertyDetailSidebar = ({ property }: PropertyDetailSidebarProps) => {
     });
   };
 
-  const handleMakePayment = () => {
-    window.location.href = `/payment?propertyId=${property.id}&amount=${property.price}`;
+  const getPaymentUrl = (method: string) => {
+    const params = new URLSearchParams({
+      propertyId: property.id,
+      amount: property.price.toString(),
+      title: property.title,
+    });
+    return `/payment/${method}?${params.toString()}`;
   };
 
   return (
@@ -53,13 +60,56 @@ const PropertyDetailSidebar = ({ property }: PropertyDetailSidebarProps) => {
           <span>Listed {format(new Date(property.created_at), 'MMM dd, yyyy')}</span>
         </div>
 
-        <div className="space-y-3">
-          {property.status === 'available' && (
-            <Button onClick={handleMakePayment} className="w-full" size="lg">
-              Make Payment
+        {property.status === 'available' && (
+          <div className="space-y-3">
+            <p className="text-sm font-medium text-foreground">Payment Options</p>
+            
+            <Button 
+              onClick={() => navigate(getPaymentUrl('card'))}
+              variant="outline" 
+              className="w-full justify-start gap-3 h-14"
+            >
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <CreditCard className="h-5 w-5 text-primary" />
+              </div>
+              <div className="text-left">
+                <p className="font-medium">Credit/Debit Card</p>
+                <p className="text-xs text-muted-foreground">Visa, Mastercard</p>
+              </div>
             </Button>
-          )}
-          <Button onClick={handleContactAgent} variant="outline" className="w-full" size="lg">
+
+            <Button 
+              onClick={() => navigate(getPaymentUrl('bank-transfer'))}
+              variant="outline" 
+              className="w-full justify-start gap-3 h-14"
+            >
+              <div className="p-2 bg-blue-500/10 rounded-lg">
+                <Building2 className="h-5 w-5 text-blue-600" />
+              </div>
+              <div className="text-left">
+                <p className="font-medium">Bank Transfer</p>
+                <p className="text-xs text-muted-foreground">Direct bank payment</p>
+              </div>
+            </Button>
+
+            <Button 
+              onClick={() => navigate(getPaymentUrl('mobile-money'))}
+              variant="outline" 
+              className="w-full justify-start gap-3 h-14"
+            >
+              <div className="p-2 bg-yellow-500/10 rounded-lg">
+                <Smartphone className="h-5 w-5 text-yellow-600" />
+              </div>
+              <div className="text-left">
+                <p className="font-medium">Mobile Money</p>
+                <p className="text-xs text-muted-foreground">MTN, Airtel Money</p>
+              </div>
+            </Button>
+          </div>
+        )}
+
+        <div className="mt-4">
+          <Button onClick={handleContactAgent} variant="secondary" className="w-full" size="lg">
             <Phone className="h-4 w-4 mr-2" />
             Contact Us
           </Button>

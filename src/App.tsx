@@ -12,6 +12,9 @@ import ContactPage from "./pages/ContactPage";
 import PropertiesPage from "./pages/PropertiesPage";
 import PropertyDetailPage from "./pages/PropertyDetailPage";
 import PaymentPage from "./pages/PaymentPage";
+import CardPaymentPage from "./pages/payment/CardPaymentPage";
+import BankTransferPage from "./pages/payment/BankTransferPage";
+import MobileMoneyPage from "./pages/payment/MobileMoneyPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -49,6 +52,9 @@ const App = () => {
               <Route path="/properties" element={<PropertiesPage />} />
               <Route path="/properties/:id" element={<PropertyDetailPage />} />
               <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/payment/card" element={<CardPaymentPage />} />
+              <Route path="/payment/bank-transfer" element={<BankTransferPage />} />
+              <Route path="/payment/mobile-money" element={<MobileMoneyPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
