@@ -116,14 +116,140 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      properties_public: {
+        Row: {
+          bathrooms: number | null
+          bedrooms: number | null
+          brand: string | null
+          category: Database["public"]["Enums"]["property_category"] | null
+          color: string | null
+          condition: string | null
+          created_at: string | null
+          description: string | null
+          dimensions: string | null
+          engine_size: string | null
+          featured: boolean | null
+          features: string[] | null
+          fuel_type: string | null
+          id: string | null
+          images: string[] | null
+          land_size: string | null
+          location: string | null
+          make: string | null
+          material: string | null
+          mileage: number | null
+          model: string | null
+          parking_spaces: number | null
+          price: number | null
+          size: string | null
+          status: Database["public"]["Enums"]["property_status"] | null
+          title: string | null
+          transmission: string | null
+          updated_at: string | null
+          year: number | null
+          year_built: number | null
+        }
+        Insert: {
+          bathrooms?: number | null
+          bedrooms?: number | null
+          brand?: string | null
+          category?: Database["public"]["Enums"]["property_category"] | null
+          color?: string | null
+          condition?: string | null
+          created_at?: string | null
+          description?: string | null
+          dimensions?: string | null
+          engine_size?: string | null
+          featured?: boolean | null
+          features?: string[] | null
+          fuel_type?: string | null
+          id?: string | null
+          images?: string[] | null
+          land_size?: string | null
+          location?: string | null
+          make?: string | null
+          material?: string | null
+          mileage?: number | null
+          model?: string | null
+          parking_spaces?: number | null
+          price?: number | null
+          size?: string | null
+          status?: Database["public"]["Enums"]["property_status"] | null
+          title?: string | null
+          transmission?: string | null
+          updated_at?: string | null
+          year?: number | null
+          year_built?: number | null
+        }
+        Update: {
+          bathrooms?: number | null
+          bedrooms?: number | null
+          brand?: string | null
+          category?: Database["public"]["Enums"]["property_category"] | null
+          color?: string | null
+          condition?: string | null
+          created_at?: string | null
+          description?: string | null
+          dimensions?: string | null
+          engine_size?: string | null
+          featured?: boolean | null
+          features?: string[] | null
+          fuel_type?: string | null
+          id?: string | null
+          images?: string[] | null
+          land_size?: string | null
+          location?: string | null
+          make?: string | null
+          material?: string | null
+          mileage?: number | null
+          model?: string | null
+          parking_spaces?: number | null
+          price?: number | null
+          size?: string | null
+          status?: Database["public"]["Enums"]["property_status"] | null
+          title?: string | null
+          transmission?: string | null
+          updated_at?: string | null
+          year?: number | null
+          year_built?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "moderator" | "user"
       property_category: "land" | "house" | "vehicle" | "furniture"
       property_status: "available" | "sold" | "pending"
     }
@@ -253,6 +379,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "moderator", "user"],
       property_category: ["land", "house", "vehicle", "furniture"],
       property_status: ["available", "sold", "pending"],
     },
