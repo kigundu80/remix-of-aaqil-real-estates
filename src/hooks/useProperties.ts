@@ -4,9 +4,32 @@ import { supabase } from "@/integrations/supabase/client";
 import { PropertyType, PropertyCategory, PropertyFormValues } from "@/types/property";
 import { useToast } from "@/hooks/use-toast";
 
+// Hook for public property listing (uses secure view that hides created_by)
 export const useProperties = (category?: PropertyCategory) => {
   return useQuery({
     queryKey: ["properties", category],
+    queryFn: async () => {
+      let query = supabase
+        .from("properties_public")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (category) {
+        query = query.eq("category", category);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      return data as PropertyType[];
+    },
+  });
+};
+
+// Hook for admin property management (uses main table with full access)
+export const useAdminProperties = (category?: PropertyCategory) => {
+  return useQuery({
+    queryKey: ["admin-properties", category],
     queryFn: async () => {
       let query = supabase
         .from("properties")
