@@ -27,9 +27,9 @@ const AboutPage = () => {
 
   const teamMembers = [
     {
-      name: "Henry Musoke",
+      name: "Jairus Mukabya",
       position: "Founder & CEO",
-      bio: "With over 20 years in Uganda's real estate industry, Henry founded HM Property Consultants with a vision to make land ownership accessible and transparent.",
+      bio: "With over 20 years in Uganda's real estate industry, Henry founded JAH'S Property Consultants with a vision to make land ownership accessible and transparent.",
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
     },
     {
@@ -60,9 +60,9 @@ const AboutPage = () => {
         {/* Hero Banner */}
         <div className="relative py-24 bg-gradient-to-r from-hm-green-dark to-hm-green text-white">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About HM Property Consultants</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">About JAH'S Property Consultants</h1>
             <p className="text-xl max-w-3xl mx-auto">
-              Your trusted partner in finding the perfect land property in Uganda since 2005.
+              Your trusted partner in finding the perfect land property in Uganda since 2024.
             </p>
           </div>
         </div>
@@ -74,7 +74,7 @@ const AboutPage = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6">Our Story</h2>
                 <p className="text-gray-700 mb-4">
-                  HM Property Consultants was founded in 2005 by Henry Musoke with a vision to transform the 
+                  JAH'S Property Consultants was founded in 2024 by Jairus Mukabya with a vision to transform the 
                   land buying and selling process in Uganda. Having witnessed the challenges and complexities 
                   in the Ugandan real estate market, Henry set out to create a company that would prioritize 
                   transparency, integrity, and client satisfaction above all else.
@@ -86,7 +86,7 @@ const AboutPage = () => {
                   service to our clients from start to finish.
                 </p>
                 <p className="text-gray-700">
-                  Today, HM Property Consultants stands as a beacon of trust in the industry, having 
+                  Today, JAH'S Property Consultants stands as a beacon of trust in the industry, having 
                   facilitated thousands of successful land transactions across Uganda. Our commitment 
                   to our founding principles remains unwavering as we continue to grow and adapt to the 
                   evolving needs of our clients.
@@ -101,7 +101,7 @@ const AboutPage = () => {
                 />
                 <div className="absolute -bottom-6 -right-6 bg-hm-gold text-black p-6 rounded-lg shadow-lg hidden md:block">
                   <p className="text-lg font-semibold mb-1">Established</p>
-                  <p className="text-3xl font-bold">2005</p>
+                  <p className="text-3xl font-bold">2024</p>
                 </div>
               </div>
             </div>
