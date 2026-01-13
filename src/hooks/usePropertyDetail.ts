@@ -19,8 +19,9 @@ export const usePropertyDetail = (id: string | undefined) => {
       setError(null);
 
       try {
+        // Use the public view which hides created_by for security
         const { data, error } = await supabase
-          .from('properties')
+          .from('properties_public')
           .select('*')
           .eq('id', id)
           .maybeSingle();
@@ -61,7 +62,8 @@ export const usePropertyDetail = (id: string | undefined) => {
             brand: data.brand,
             created_at: data.created_at,
             updated_at: data.updated_at,
-            created_by: data.created_by,
+            // created_by is not exposed in public view for security
+            created_by: undefined,
           });
         } else {
           setProperty(null);

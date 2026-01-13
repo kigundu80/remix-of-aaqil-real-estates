@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash2, Car, Home, Sofa, Mountain } from "lucide-react";
-import { useProperties, useDeleteProperty } from "@/hooks/useProperties";
+import { useAdminProperties, useDeleteProperty } from "@/hooks/useProperties";
 import { PropertyCategory } from "@/types/property";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -24,7 +24,7 @@ const PropertyManagementTable: React.FC = () => {
   const [categoryFilter, setCategoryFilter] = useState<PropertyCategory | "all">("all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   
-  const { data: properties = [], isLoading } = useProperties(
+  const { data: properties = [], isLoading } = useAdminProperties(
     categoryFilter === "all" ? undefined : categoryFilter
   );
   const deleteProperty = useDeleteProperty();
