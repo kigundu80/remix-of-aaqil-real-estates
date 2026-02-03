@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { LogOut, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   DashboardGroup, 
   PropertiesGroup,
@@ -33,8 +34,9 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { signOut } = useAuth();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (isVipMode) {
       localStorage.removeItem("isVipAdmin");
       localStorage.removeItem("vipAdminName");
@@ -47,12 +49,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       
       navigate("/vip-login");
     } else {
+      await signOut();
       toast({
         title: "Logged Out",
         description: "You have been logged out of the admin area."
       });
-      // This would normally handle actual logout logic
-      navigate("/");
+      navigate("/login");
     }
   };
 

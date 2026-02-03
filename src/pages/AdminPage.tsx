@@ -1,39 +1,47 @@
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { AdminSidebar } from "@/components/admin/sidebar/AdminSidebar";
-
-// This would normally come from an authentication context
-const isAdmin = true; // For demo purposes, this would be dynamically determined
-const adminName = "Kiggundu Akram"; // Add the admin name
+import { Loader2 } from "lucide-react";
 
 const AdminPage: React.FC = () => {
-  const { toast } = useToast();
-  const [unreadCount, setUnreadCount] = useState<number>(0);
-  
-  // Simulate fetching notification count
-  useEffect(() => {
-    // In a real app, this would be fetched from an API or websocket
-    setUnreadCount(5);
-  }, []);
-  
-  // For demonstration purposes, we're hardcoding admin access
-  // In a real app, this would check user roles from authentication
-  if (!isAdmin) {
-    toast({
-      title: "Access Denied",
-      description: "You don't have permission to access the admin area",
-      variant: "destructive"
-    });
-    return <Navigate to="/" replace />;
+  const { user, isAdmin, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-destructive mb-2">Access Denied</h1>
+          <p className="text-muted-foreground">
+            You don't have permission to access the admin area.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Get admin name from user metadata
+  const adminName = user.user_metadata?.first_name 
+    ? `${user.user_metadata.first_name} ${user.user_metadata.last_name || ''}`
+    : user.email || 'Admin';
 
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex w-full min-h-screen">
-        <AdminSidebar adminName={adminName} unreadCount={unreadCount} />
+        <AdminSidebar adminName={adminName} unreadCount={0} />
         
         <SidebarInset>
           <div className="p-6">
